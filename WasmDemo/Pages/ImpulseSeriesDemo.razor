@@ -1,0 +1,60 @@
+@page "/impulse-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Impulse Series Chart</PageTitle>
+<h1>Impulse Series Chart</h1>
+
+<p>This page demonstrates impulse (stem) series in SciChart showing discrete data points.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis VisibleRange="@(new NumberRange { Min = -1, Max = 13 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis />
+            </YAxes>
+            <FastImpulseRenderableSeries
+                Id="impulse1"
+                Stroke="#FF6B35"
+                StrokeThickness="2"
+                Fill="red"
+                Size="10"
+                ZeroLineY="0"
+                SeriesName="Signal Data">
+                <ImpulseSeriesDataLabelProvider
+                    Style="@(new TDataLabelStyle { FontSize = 12, FontFamily = "Arial" })"
+                    MetadataSelector="(metadata) => metadata.customText"
+                    VerticalTextPosition="EVerticalTextPosition.Above"
+                    IsEnabled="true" />
+                <XyDataSeries
+                    @ref="_xyDataSeriesImpulse1Ref"
+                    XValues="@xData"
+                    YValues="@yData"
+                    Metadata="@metadata" />
+            </FastImpulseRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div style="margin-left: 20px;">
+        <button type="button" class="btn btn-secondary mt-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button type="button" class="btn btn-secondary mt-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+        <br />
+        <div class="mt-3">
+            <h5>Description:</h5>
+            <ul style="font-size: 0.9em;">
+                <li>Impulse (stem) series showing discrete signal values</li>
+                <li>Data labels display value above each impulse</li>
+                <li>Labels show metadata customText for each point</li>
+                <li>Impulse stems extend from zero line to data value</li>
+            </ul>
+        </div>
+    </div>
+</div>

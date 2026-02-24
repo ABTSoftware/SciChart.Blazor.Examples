@@ -1,0 +1,113 @@
+@page "/line-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Line Series Chart</PageTitle>
+<h1>Line Series Chart</h1>
+
+<p>This page demonstrates line series in SciChart.</p>
+
+<div id="demo" style="display: flex">
+    <div style="width: 600px;">
+        <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis VisibleRange="@(new NumberRange { Min = -1, Max = 15 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis VisibleRange="@(new NumberRange { Min = -12, Max = 12 })" />
+            </YAxes>
+            <FastLineRenderableSeries
+                Id="line1"
+                Stroke="@_stroke"
+                StrokeThickness="@_strokeThickness"
+                SeriesName="Sine Wave"
+                PointMarker="@_pointMarker">
+                <LineSeriesDataLabelProvider
+                    MetadataSelector="(metadata) => metadata?.customText ?? 'N/A'"
+                    IsEnabled="true"
+                    PointCountThreshold="20"
+                    Style="@(new TDataLabelStyle { FontSize = 12, FontFamily = "Arial" })"
+                    Color="white" />
+                <XyDataSeries @ref="_xyDataSeriesLine1Ref" XValues="@xData" YValues="@yData" Metadata="@metadata" />
+            </FastLineRenderableSeries>
+            <FastLineRenderableSeries
+                Id="line2"
+                Stroke="green"
+                StrokeThickness="4"
+                StrokeDashArray="@(new double[] { 5, 5 })"
+                SeriesName="Cosine Wave">
+                <XyDataSeries @ref="_xyDataSeriesLine2Ref" XValues="@xData" YValues="@yData2" />
+            </FastLineRenderableSeries>
+            <SplineLineRenderableSeries
+                Id="spline1"
+                Stroke="lightgrey"
+                StrokeThickness="4"
+                InterpolationPoints="10"
+                SeriesName="Spline Curve">
+                <XyDataSeries @ref="_xyDataSeriesSplineLine1Ref" XValues="@xData" YValues="@yData3" />
+            </SplineLineRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+            <RolloverModifier TooltipDataTemplate="@tooltipTemplate" IncludedSeriesIds="@(["line1"])" />
+        </SciChartSurface>
+    </div>
+    <div style="margin-left: 20px;">
+        <button id="btn1" type="button" class="btn btn-secondary mt-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button id="btn2" type="button" class="btn btn-secondary mt-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+        <br />
+
+        <!-- Series Style Controls -->
+        <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Series Style Controls</h6>
+
+            <div class="mb-2">
+                <label for="strokeColor" class="form-label">Stroke Color:</label>
+                <input type="color" class="form-control form-control-color" id="strokeColor"
+                       value="@_stroke" @onchange="OnStrokeColorChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="strokeThickness" class="form-label">Stroke Thickness: @_strokeThickness px</label>
+                <input type="range" class="form-range" id="strokeThickness"
+                       min="1" max="10" step="1" value="@_strokeThickness"
+                       @onchange="OnStrokeThicknessChanged">
+            </div>
+        </div>
+
+        <!-- PointMarker Controls -->
+        <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Point Marker Controls</h6>
+
+            <div class="mb-2">
+                <label for="markerType" class="form-label">Marker Type:</label>
+                <select class="form-select form-select-sm" id="markerType"
+                        value="@_selectedMarkerType" @onchange="OnMarkerTypeChanged">
+                    <option value="@EPointMarkerType.Ellipse">Ellipse</option>
+                    <option value="@EPointMarkerType.Square">Square</option>
+                    <option value="@EPointMarkerType.Triangle">Triangle</option>
+                    <option value="@EPointMarkerType.Cross">Cross</option>
+                    <option value="@EPointMarkerType.X">X</option>
+                </select>
+            </div>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="lastPointOnly"
+                       checked="@_lastPointOnly" @onchange="ToggleLastPointOnly">
+                <label class="form-check-label" for="lastPointOnly">
+                    Last Point Only
+                </label>
+            </div>
+
+            <div class="mb-2">
+                <label for="markerSize" class="form-label">Size: @_markerSize px</label>
+                <input type="range" class="form-range" id="markerSize"
+                       min="5" max="30" step="5" value="@_markerSize"
+                       @onchange="OnMarkerSizeChanged">
+            </div>
+        </div>
+    </div>
+</div>

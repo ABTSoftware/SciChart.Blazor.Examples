@@ -1,0 +1,69 @@
+@page "/vertically-stacked-column-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Vertically Stacked Column Chart</PageTitle>
+
+<h1>Vertically Stacked Column Chart</h1>
+
+<p>This example demonstrates vertically stacked columns where series stack on top of each other.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis Id="xAxis" AxisTitle="Category" VisibleRange="@(new NumberRange { Min = -1, Max = 8 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis Id="yAxis" AxisTitle="Value" />
+            </YAxes>
+
+            <StackedColumnCollection IsOneHundredPercent="@_isOneHundredPercent" XAxisId="xAxis" YAxisId="yAxis" DataPointWidth="0.5">
+                <StackedColumnRenderableSeries
+                    Id="series1"
+                    Fill="rgba(70, 130, 180, 0.8)"
+                    Stroke="#4682B4"
+                    StrokeThickness="1"
+                    SeriesName="Product A">
+                    <XyDataSeries @ref="_xyDataSeriesSeries1Ref" XValues="@_xData" YValues="@_yData1" />
+                </StackedColumnRenderableSeries>
+
+                <StackedColumnRenderableSeries
+                    Id="series2"
+                    Fill="rgba(255, 140, 0, 0.8)"
+                    Stroke="#FF8C00"
+                    StrokeThickness="1"
+                    SeriesName="Product B">
+                    <XyDataSeries @ref="_xyDataSeriesSeries2Ref" XValues="@_xData" YValues="@_yData2" />
+                </StackedColumnRenderableSeries>
+
+                <StackedColumnRenderableSeries
+                    Id="series3"
+                    Fill="rgba(50, 205, 50, 0.8)"
+                    Stroke="#32CD32"
+                    StrokeThickness="1"
+                    SeriesName="Product C">
+                    <XyDataSeries @ref="_xyDataSeriesSeries3Ref" XValues="@_xData" YValues="@_yData3" />
+                </StackedColumnRenderableSeries>
+            </StackedColumnCollection>
+
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div>
+        <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+    </div>
+</div>
+
+<div style="margin-top: 20px;">
+    <label>
+        <input type="checkbox" @bind="_isOneHundredPercent" @bind:after="OnStackingModeChanged" />
+        Use 100% Stacking Mode
+    </label>
+</div>

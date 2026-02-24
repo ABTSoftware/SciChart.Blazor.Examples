@@ -1,0 +1,89 @@
+@page "/scatter-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Scatter Series Chart</PageTitle>
+
+<h1>Scatter Series Chart</h1>
+
+<p>This example demonstrates the XY Scatter Series for scatter plot visualizations.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis Id="xAxis" AxisTitle="X Axis" VisibleRange="@(new NumberRange { Min = 0, Max = 13 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis Id="yAxis" AxisTitle="Y Axis" />
+            </YAxes>
+
+            <XyScatterRenderableSeries
+                Id="scatter1"
+                Stroke="red"
+                StrokeThickness="2"
+                SeriesName="Scatter Data 1"
+                PointMarker="@_pointMarker1">
+                <ScatterSeriesDataLabelProvider
+                    Style="@(new TDataLabelStyle { FontSize = 12, FontFamily = "Arial" })"
+                    MetadataSelector="(metadata) => metadata.customText"
+                    VerticalTextPosition="EVerticalTextPosition.Above"
+                    IsEnabled="true" />
+                <XyDataSeries @ref="_xyDataSeriesScatter1Ref" XValues="@xData1" YValues="@yData1" Metadata="@metadata1" />
+            </XyScatterRenderableSeries>
+
+            <XyScatterRenderableSeries
+                Id="scatter2"
+                Stroke="green"
+                StrokeThickness="2"
+                SeriesName="Scatter Data 2"
+                PointMarker="@_pointMarker2">
+                <XyDataSeries @ref="_xyDataSeriesScatter2Ref" XValues="@xData2" YValues="@yData2" />
+            </XyScatterRenderableSeries>
+
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div style="margin-left: 20px;">
+        <button type="button" class="btn btn-secondary mt-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button type="button" class="btn btn-secondary mt-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+        <br />
+
+        <!-- PointMarker Controls -->
+        <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Point Marker Controls</h6>
+
+            <div class="mb-2">
+                <label for="markerType" class="form-label">Marker Type (Scatter 1):</label>
+                <select class="form-select form-select-sm" id="markerType"
+                        value="@_selectedMarkerType" @onchange="OnMarkerTypeChanged">
+                    <option value="@EPointMarkerType.Ellipse">Ellipse</option>
+                    <option value="@EPointMarkerType.Square">Square</option>
+                    <option value="@EPointMarkerType.Triangle">Triangle</option>
+                    <option value="@EPointMarkerType.Cross">Cross</option>
+                    <option value="@EPointMarkerType.X">X</option>
+                </select>
+            </div>
+
+            <div class="mb-2">
+                <label for="markerSize" class="form-label">Marker Size: @_markerSize px</label>
+                <input type="range" class="form-range" id="markerSize"
+                       min="5" max="30" step="1" value="@_markerSize"
+                       @onchange="OnMarkerSizeChanged">
+            </div>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="enableMarkers"
+                       checked="@_markersEnabled" @onchange="ToggleMarkers">
+                <label class="form-check-label" for="enableMarkers">
+                    Enable Markers
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

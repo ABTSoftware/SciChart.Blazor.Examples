@@ -1,0 +1,42 @@
+@page "/linesegment-xyxy-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Line Segment Series Chart (XYXY)</PageTitle>
+<h1>Line Segment Series Chart (XYXY)</h1>
+
+<p>This page demonstrates line segment series using XyxyDataSeries with start and end point pairs.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis VisibleRange="@(new NumberRange { Min = 0, Max = 13 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis />
+            </YAxes>
+            <FastLineSegmentRenderableSeries
+                Id="linesegment1"
+                Stroke="#9C27B0"
+                StrokeThickness="2"
+                SeriesName="Line Segments">
+                <XyxyDataSeries @ref="_xyxyDataSeriesLinesegment1Ref"
+                    XValues="@xValues"
+                    YValues="@yValues"
+                    X1Values="@x1Values"
+                    Y1Values="@y1Values" />
+            </FastLineSegmentRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div>
+        <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+    </div>
+</div>

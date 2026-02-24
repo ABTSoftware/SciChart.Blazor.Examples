@@ -1,0 +1,46 @@
+@page "/boxplot-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Box Plot Series Chart</PageTitle>
+<h1>Box Plot Series Chart</h1>
+
+<p>This page demonstrates box plot series in SciChart showing statistical data distribution.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis VisibleRange="@(new NumberRange { Min = -1, Max = 7 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis />
+            </YAxes>
+            <FastBoxPlotRenderableSeries
+                Id="boxplot1"
+                Fill="#4CAF5033"
+                Stroke="#4CAF50"
+                StrokeThickness="2"
+                DataPointWidth="0.5"
+                SeriesName="Statistical Distribution">
+                <BoxPlotDataSeries @ref="_boxPlotDataSeriesBoxplot1Ref"
+                    XValues="@xData"
+                    MaximumValues="@maximumData"
+                    UpperQuartileValues="@upperQuartileData"
+                    MedianValues="@medianData"
+                    LowerQuartileValues="@lowerQuartileData"
+                    MinimumValues="@minimumData" />
+            </FastBoxPlotRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div>
+        <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+    </div>
+</div>

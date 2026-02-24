@@ -1,0 +1,276 @@
+@page "/styling-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Styling Demo</PageTitle>
+<h1>Styling Demo</h1>
+
+<div id="demo" style="display: flex">
+    <div style="width: 600px;">
+        <SciChartSurface @ref="_sciChartRef"
+                         Id="@_id"
+                         Theme="@_theme"
+                         TouchAction="@_touchAction"
+                         Title="@_title"
+                         TitleStyle="@_titleStyle"
+                         Background="@_background"
+                         WidthAspect="@_widthAspect"
+                         HeightAspect="@_heightAspect"
+                         DisableAspect="@_disableAspect"
+                         FreezeWhenOutOfView="@_freezeWhenOutOfView"
+                         Padding="@_padding"
+                         CanvasBorder="@_canvasBorder"
+                         ViewportBorder="@_viewportBorder"
+                         DrawSeriesBehindAxis="@_drawSeriesBehindAxis"
+                         AutoColorMode="@_autoColorMode"
+                         CreateSuspended="@_createSuspended">
+            <XAxes>
+                <NumericAxis AxisTitle="X Axis" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis />
+            </YAxes>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div style="margin-left: 20px; max-height: 90vh; overflow-y: auto;">
+        <!-- Theme Settings -->
+        <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <div class="mb-2">
+                <label for="theme" class="form-label">Theme:</label>
+                <select class="form-select form-select-sm" id="theme"
+                        value="@_selectedTheme" @onchange="OnThemeChanged">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                    <option value="dark2">Dark2</option>
+                    <option value="navy">Navy</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Title Controls -->
+        <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <div class="mb-2">
+                <label for="title" class="form-label">Title Text:</label>
+                <input type="text" class="form-control form-control-sm" id="title"
+                       value="@_title" @onchange="OnTitleChanged">
+            </div>
+        </div>
+
+        <!-- Title Style Controls -->
+        <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Title Style</h6>
+
+            <div class="mb-2">
+                <label for="titlePosition" class="form-label">Position:</label>
+                <select class="form-select form-select-sm" id="titlePosition"
+                        value="@_titlePosition" @onchange="OnTitlePositionChanged">
+                    <option value="@ETitlePosition.Top">Top</option>
+                    <option value="@ETitlePosition.Bottom">Bottom</option>
+                    <option value="@ETitlePosition.Left">Left</option>
+                    <option value="@ETitlePosition.Right">Right</option>
+                </select>
+            </div>
+
+            <div class="mb-2">
+                <label for="titleAlignment" class="form-label">Alignment:</label>
+                <select class="form-select form-select-sm" id="titleAlignment"
+                        value="@_titleAlignment" @onchange="OnTitleAlignmentChanged">
+                    <option value="@ETextAlignment.Left">Left</option>
+                    <option value="@ETextAlignment.Center">Center</option>
+                    <option value="@ETextAlignment.Right">Right</option>
+                </select>
+            </div>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="titlePlaceWithinChart"
+                       checked="@_titlePlaceWithinChart" @onchange="OnTitlePlaceWithinChartChanged">
+                <label class="form-check-label" for="titlePlaceWithinChart">
+                    Place Within Chart
+                </label>
+            </div>
+
+            <div class="mb-2">
+                <label for="titleFontSize" class="form-label">Font Size: @_titleFontSize px</label>
+                <input type="range" class="form-range" id="titleFontSize"
+                       min="10" max="40" step="2" value="@_titleFontSize"
+                       @onchange="OnTitleFontSizeChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="titleColor" class="form-label">Text Color:</label>
+                <input type="color" class="form-control form-control-color" id="titleColor"
+                       value="@_titleColor" @onchange="OnTitleColorChanged">
+            </div>
+        </div>
+
+        <!-- Background Controls -->
+        <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <div class="mb-2">
+                <label for="background" class="form-label">Background Color:</label>
+                <input type="color" class="form-control form-control-color" id="background"
+                       value="@_background" @onchange="OnBackgroundChanged">
+            </div>
+        </div>
+
+        <!-- Aspect Ratio Controls -->
+        <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Aspect Ratio</h6>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="disableAspect"
+                       checked="@_disableAspect" @onchange="OnDisableAspectChanged">
+                <label class="form-check-label" for="disableAspect">
+                    Disable Aspect Ratio
+                </label>
+            </div>
+
+            <div class="mb-2">
+                <label for="widthAspect" class="form-label">Width Aspect: @_widthAspect</label>
+                <input type="range" class="form-range" id="widthAspect"
+                       min="1" max="5" step="1" value="@_widthAspect"
+                       disabled="@_disableAspect"
+                       @onchange="OnWidthAspectChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="heightAspect" class="form-label">Height Aspect: @_heightAspect</label>
+                <input type="range" class="form-range" id="heightAspect"
+                       min="1" max="5" step="1" value="@_heightAspect"
+                       disabled="@_disableAspect"
+                       @onchange="OnHeightAspectChanged">
+            </div>
+        </div>
+
+        <!-- Padding Controls -->
+        <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Padding</h6>
+
+            <div class="mb-2">
+                <label for="paddingLeft" class="form-label">Left: @_paddingLeft px</label>
+                <input type="range" class="form-range" id="paddingLeft"
+                       min="0" max="50" step="5" value="@_paddingLeft"
+                       @onchange="OnPaddingLeftChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="paddingTop" class="form-label">Top: @_paddingTop px</label>
+                <input type="range" class="form-range" id="paddingTop"
+                       min="0" max="50" step="5" value="@_paddingTop"
+                       @onchange="OnPaddingTopChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="paddingRight" class="form-label">Right: @_paddingRight px</label>
+                <input type="range" class="form-range" id="paddingRight"
+                       min="0" max="50" step="5" value="@_paddingRight"
+                       @onchange="OnPaddingRightChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="paddingBottom" class="form-label">Bottom: @_paddingBottom px</label>
+                <input type="range" class="form-range" id="paddingBottom"
+                       min="0" max="50" step="5" value="@_paddingBottom"
+                       @onchange="OnPaddingBottomChanged">
+            </div>
+        </div>
+
+        <!-- Canvas Border Controls -->
+        <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <div class="mb-2">
+                <label for="canvasBorderColor" class="form-label">Canvas Border Color:</label>
+                <input type="color" class="form-control form-control-color" id="canvasBorderColor"
+                       value="@_canvasBorderColor" @onchange="OnCanvasBorderColorChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="canvasBorderLeft" class="form-label">Left: @_canvasBorderLeft px</label>
+                <input type="range" class="form-range" id="canvasBorderLeft"
+                       min="0" max="50" step="5" value="@_canvasBorderLeft"
+                       @onchange="OnCanvasBorderLeftChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="canvasBorderTop" class="form-label">Top: @_canvasBorderTop px</label>
+                <input type="range" class="form-range" id="canvasBorderTop"
+                       min="0" max="50" step="5" value="@_canvasBorderTop"
+                       @onchange="OnCanvasBorderTopChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="canvasBorderRight" class="form-label">Right: @_canvasBorderRight px</label>
+                <input type="range" class="form-range" id="canvasBorderRight"
+                       min="0" max="50" step="5" value="@_canvasBorderRight"
+                       @onchange="OnCanvasBorderRightChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="canvasBorderBottom" class="form-label">Bottom: @_canvasBorderBottom px</label>
+                <input type="range" class="form-range" id="canvasBorderBottom"
+                       min="0" max="50" step="5" value="@_canvasBorderBottom"
+                       @onchange="OnCanvasBorderBottomChanged">
+            </div>
+        </div>
+
+        <!-- Viewport Border Controls -->
+        <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <div class="mb-2">
+                <label for="viewportBorderColor" class="form-label">Viewport Border Color:</label>
+                <input type="color" class="form-control form-control-color" id="viewportBorderColor"
+                       value="@_viewportBorderColor" @onchange="OnViewportBorderColorChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="viewportBorderLeft" class="form-label">Left: @_viewportBorderLeft px</label>
+                <input type="range" class="form-range" id="viewportBorderLeft"
+                       min="0" max="50" step="5" value="@_viewportBorderLeft"
+                       @onchange="OnViewportBorderLeftChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="viewportBorderTop" class="form-label">Top: @_viewportBorderTop px</label>
+                <input type="range" class="form-range" id="viewportBorderTop"
+                       min="0" max="50" step="5" value="@_viewportBorderTop"
+                       @onchange="OnViewportBorderTopChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="viewportBorderRight" class="form-label">Right: @_viewportBorderRight px</label>
+                <input type="range" class="form-range" id="viewportBorderRight"
+                       min="0" max="50" step="5" value="@_viewportBorderRight"
+                       @onchange="OnViewportBorderRightChanged">
+            </div>
+
+            <div class="mb-2">
+                <label for="viewportBorderBottom" class="form-label">Bottom: @_viewportBorderBottom px</label>
+                <input type="range" class="form-range" id="viewportBorderBottom"
+                       min="0" max="50" step="5" value="@_viewportBorderBottom"
+                       @onchange="OnViewportBorderBottomChanged">
+            </div>
+        </div>
+
+        <!-- Other Settings -->
+        <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Other Settings</h6>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="drawSeriesBehindAxis"
+                       checked="@_drawSeriesBehindAxis" @onchange="OnDrawSeriesBehindAxisChanged">
+                <label class="form-check-label" for="drawSeriesBehindAxis">
+                    Draw Series Behind Axis
+                </label>
+            </div>
+
+            <div class="mb-2">
+                <label for="autoColorMode" class="form-label">Auto Color Mode:</label>
+                <select class="form-select form-select-sm" id="autoColorMode"
+                        value="@_autoColorMode" @onchange="OnAutoColorModeChanged">
+                    <option value="@EAutoColorMode.Never">Never</option>
+                    <option value="@EAutoColorMode.Once">Once</option>
+                    <option value="@EAutoColorMode.OnAddRemoveSeries">On Add/Remove Series</option>
+                    <option value="@EAutoColorMode.Always">Always</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

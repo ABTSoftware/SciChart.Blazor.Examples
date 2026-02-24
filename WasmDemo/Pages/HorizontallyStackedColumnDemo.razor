@@ -1,0 +1,69 @@
+@page "/horizontally-stacked-column-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Horizontally Stacked Column Chart (Side by Side)</PageTitle>
+
+<h1>Horizontally Stacked Column Chart (Side by Side)</h1>
+
+<p>This example demonstrates side-by-side columns using different stackedGroupId values for each series.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis Id="xAxis" AxisTitle="Category" VisibleRange="@(new NumberRange { Min = -1, Max = 8 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis Id="yAxis" AxisTitle="Value" />
+            </YAxes>
+
+            <StackedColumnCollection XAxisId="xAxis" YAxisId="yAxis" DataPointWidth="0.7" Spacing="5">
+                <StackedColumnRenderableSeries
+                    Id="series1"
+                    Fill="rgba(70, 130, 180, 0.8)"
+                    Stroke="#4682B4"
+                    StrokeThickness="1"
+                    SeriesName="Product A"
+                    StackedGroupId="group1">
+                    <XyDataSeries @ref="_xyDataSeriesSeries1Ref" XValues="@_xData" YValues="@_yData1" />
+                </StackedColumnRenderableSeries>
+
+                <StackedColumnRenderableSeries
+                    Id="series2"
+                    Fill="rgba(255, 140, 0, 0.8)"
+                    Stroke="#FF8C00"
+                    StrokeThickness="1"
+                    SeriesName="Product B"
+                    StackedGroupId="group2">
+                    <XyDataSeries @ref="_xyDataSeriesSeries2Ref" XValues="@_xData" YValues="@_yData2" />
+                </StackedColumnRenderableSeries>
+
+                <StackedColumnRenderableSeries
+                    Id="series3"
+                    Fill="rgba(50, 205, 50, 0.8)"
+                    Stroke="#32CD32"
+                    StrokeThickness="1"
+                    SeriesName="Product C"
+                    StackedGroupId="group3">
+                    <XyDataSeries @ref="_xyDataSeriesSeries3Ref" XValues="@_xData" YValues="@_yData3" />
+                </StackedColumnRenderableSeries>
+            </StackedColumnCollection>
+
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div>
+        <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+    </div>
+</div>
+
+<div style="margin-top: 20px;">
+    <p><strong>Note:</strong> Each series has a different <code>StackedGroupId</code> (group1, group2, group3), which causes them to render side-by-side instead of stacking vertically.</p>
+</div>

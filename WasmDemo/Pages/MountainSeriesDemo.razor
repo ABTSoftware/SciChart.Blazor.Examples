@@ -1,0 +1,72 @@
+@page "/mountain-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Mountain Series Chart</PageTitle>
+<h1>Mountain Series Chart</h1>
+
+<p>This page demonstrates mountain (area) series in SciChart showing filled area charts.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis VisibleRange="@(new NumberRange { Min = 0, Max = 11 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis />
+            </YAxes>
+            <FastMountainRenderableSeries
+                Id="mountain1"
+                FillLinearGradient="@mountainGradient"
+                Stroke="#4CAF50"
+                StrokeThickness="2"
+                ZeroLineY="0"
+                SeriesName="Mountain Area">
+                <MountainSeriesDataLabelProvider
+                    Style="@(new TDataLabelStyle { FontSize = 12, FontFamily = "Arial" })"
+                    MetadataSelector="(metadata) => metadata.customText"
+                    VerticalTextPosition="EVerticalTextPosition.Above"
+                    IsEnabled="true" />
+                <XyDataSeries
+                    @ref="_xyDataSeriesMountain1Ref"
+                    XValues="@xData"
+                    YValues="@yData"
+                    Metadata="@metadata" />
+            </FastMountainRenderableSeries>
+            <SplineMountainRenderableSeries
+                Id="splineMountain1"
+                FillLinearGradient="@splineGradient"
+                Stroke="#2196F3"
+                StrokeThickness="2"
+                ZeroLineY="0"
+                InterpolationPoints="10"
+                SeriesName="Spline Mountain Area">
+                <XyDataSeries
+                    @ref="_xyDataSeriesSplineMountain1Ref"
+                    XValues="@xData"
+                    YValues="@yData2" />
+            </SplineMountainRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div style="margin-left: 20px;">
+        <button type="button" class="btn btn-secondary mt-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button type="button" class="btn btn-secondary mt-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+        <br />
+        <div class="mt-3">
+            <h5>Description:</h5>
+            <ul style="font-size: 0.9em;">
+                <li>Green series is FastMountainRenderableSeries with data labels</li>
+                <li>Data labels display metadata text (value + "meta")</li>
+                <li>Blue series is SplineMountainRenderableSeries with smooth curves</li>
+                <li>Mountain fill uses gradient from opaque to transparent</li>
+            </ul>
+        </div>
+    </div>
+</div>

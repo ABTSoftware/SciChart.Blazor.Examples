@@ -1,0 +1,58 @@
+@page "/triangle-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Triangle Series Chart</PageTitle>
+<h1>Triangle Series Chart</h1>
+
+<p>This page demonstrates triangle series for displaying triangular shapes.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis Id="xAxis" AxisTitle="X Axis" VisibleRange="@(new NumberRange { Min = -1, Max = 15 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis Id="yAxis" AxisTitle="Y Axis" />
+            </YAxes>
+            <FastTriangleRenderableSeries
+                Id="triangle1"
+                Fill="#4CAF5088"
+                SeriesName="Triangles"
+                DrawMode="ETriangleSeriesDrawMode.List"
+                Opacity="0.8">
+                <TriangleSeriesDataLabelProvider
+                    Style="@(new TDataLabelStyle { FontSize = 12, FontFamily = "Arial" })"
+                    MetadataSelector="(metadata) => metadata.customText"
+                    VerticalTextPosition="EVerticalTextPosition.Above"
+                    IsEnabled="true" />
+                <XyDataSeries
+                    @ref="_xyDataSeriesTriangle1Ref"
+                    XValues="@xValues"
+                    YValues="@yValues"
+                    Metadata="@metadata" />
+            </FastTriangleRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div style="margin-left: 20px;">
+        <button type="button" class="btn btn-secondary mt-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button type="button" class="btn btn-secondary mt-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+        <br />
+        <div class="mt-3">
+            <h5>Description:</h5>
+            <ul style="font-size: 0.9em;">
+                <li>Triangle series with List draw mode (every 3 points = 1 triangle)</li>
+                <li>Data labels display metadata text at each vertex (value + "meta")</li>
+                <li>Initial data shows two triangles with 6 vertices total</li>
+                <li>Append operations add 3 points (one new triangle)</li>
+            </ul>
+        </div>
+    </div>
+</div>

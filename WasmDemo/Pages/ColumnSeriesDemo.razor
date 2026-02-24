@@ -1,0 +1,44 @@
+@page "/column-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Column Series Chart</PageTitle>
+<h1>Column Series Chart</h1>
+
+<p>This page demonstrates column series in SciChart.</p>
+
+<div id="demo" style="display: flex">
+    <div style="width: 600px;">
+        <SciChartSurface HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis VisibleRange="@(new NumberRange { Min = -1, Max = 15 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis VisibleRange="@(new NumberRange { Min = 0, Max = 100 })" />
+            </YAxes>
+            <FastColumnRenderableSeries
+                Id="column1"
+                Fill="#2196F3"
+                Stroke="#1976D2"
+                StrokeThickness="1"
+                DataPointWidth="0.7"
+                CornerRadius="0"
+                SeriesName="Revenue">
+                <ColumnSeriesDataLabelProvider
+                    MetadataSelector="(metadata) => metadata?.customText ?? 'N/A'"
+                    PositionMode="EColumnDataLabelPosition.Outside"
+                    IsEnabled="true"
+                    PointCountThreshold="20"
+                    Style="@(new TDataLabelStyle { FontSize = 12, FontFamily = "Arial" })"
+                    Color="white" />
+                <XyDataSeries @ref="_xyDataSeriesColumnRef" XValues="@xData" YValues="@yData" Metadata="@metadata" />
+            </FastColumnRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div style="margin-left: 20px;">
+        <button id="btn1" type="button" class="btn btn-secondary mt-2" @onclick="AppendData">
+            Append Data
+        </button>
+    </div>
+</div>

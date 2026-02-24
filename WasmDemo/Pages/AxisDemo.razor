@@ -1,0 +1,400 @@
+@page "/axis-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Axis Demo</PageTitle>
+<h1>Axis Demo</h1>
+
+<h5>Multi-Axis Demo (DateTimeNumericAxis + NumericAxis)</h5>
+<div id="demo" style="display: flex; gap: 20px; margin-bottom: 30px;">
+    <div style="width: 700px;">
+        <SciChartSurface @ref="_sciChartRef3" DivElementId="axisChart3" HeightAspect="2" WidthAspect="3" OnSciChartSurfaceRendered="OnChart3Rendered">
+            <XAxes>
+                <DateTimeNumericAxis Id="dateTimeXAxis"
+                                     AxisTitle="@_dateTimeAxisTitle"
+                                     VisibleRange="@_dateTimeVisibleRange"
+                                     DrawMajorGridLines="@_dateTimeDrawMajorGridLines"
+                                     DrawMajorBands="@_dateTimeDrawMajorBands"
+                                     AxisBandsFill="@_dateTimeAxisBandsFill" />
+                <NumericAxis Id="numericXAxis2"
+                             AxisTitle="@_numericXAxis2Title"
+                             VisibleRange="@_numericXAxis2VisibleRange"
+                             DrawMajorGridLines="false"
+                             IsInnerAxis="false" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis Id="dateTimeYAxis"
+                             AxisTitle="Temperature (°C)"
+                             AutoRange="@EAutoRange.Always" />
+            </YAxes>
+            <FastLineRenderableSeries Id="tempSeries"
+                                      XAxisId="dateTimeXAxis"
+                                      Stroke="#FF6B6B"
+                                      StrokeThickness="2"
+                                      SeriesName="Temperature">
+                <XyDataSeries XValues="@dateTimeXData" YValues="@dateTimeYData" />
+            </FastLineRenderableSeries>
+            <FastLineRenderableSeries Id="simpleNumericSeries"
+                                      XAxisId="numericXAxis2"
+                                      Stroke="#4ECDC4"
+                                      StrokeThickness="2"
+                                      SeriesName="Simple Data">
+                <XyDataSeries XValues="@numericXAxis2Data" YValues="@numericYAxis2Data" />
+            </FastLineRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+
+    <div style="overflow-y: auto; height: 467px; width: 400px;">
+        <!-- DateTimeNumericAxis Configuration -->
+        <div class="mb-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">DateTimeNumericAxis Configuration</h6>
+
+            <div class="mb-2">
+                <label class="form-label">Axis Title:</label>
+                <input type="text" class="form-control form-control-sm"
+                       value="@_dateTimeAxisTitle" @onchange="OnDateTimeAxisTitleChanged">
+            </div>
+
+            <h6 class="mb-2 mt-3" style="font-size: 0.9rem;">Visible Range (Unix timestamp):</h6>
+            <div class="mb-2">
+                <label class="form-label">Range Min: @_dateTimeVisibleRangeMin</label>
+                <input type="range" class="form-range"
+                       min="@_dateTimeRangeMinBound"
+                       max="@_dateTimeRangeMaxBound"
+                       step="86400"
+                       value="@_dateTimeVisibleRangeMin"
+                       @onchange="OnDateTimeVisibleRangeMinChanged">
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Range Max: @_dateTimeVisibleRangeMax</label>
+                <input type="range" class="form-range"
+                       min="@_dateTimeRangeMinBound"
+                       max="@_dateTimeRangeMaxBound"
+                       step="86400"
+                       value="@_dateTimeVisibleRangeMax"
+                       @onchange="OnDateTimeVisibleRangeMaxChanged">
+            </div>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="dateTimeDrawMajorGridLines"
+                       checked="@_dateTimeDrawMajorGridLines" @onchange="OnDateTimeDrawMajorGridLinesChanged">
+                <label class="form-check-label" for="dateTimeDrawMajorGridLines">
+                    Draw Major Grid Lines
+                </label>
+            </div>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="dateTimeDrawMajorBands"
+                       checked="@_dateTimeDrawMajorBands" @onchange="OnDateTimeDrawMajorBandsChanged">
+                <label class="form-check-label" for="dateTimeDrawMajorBands">
+                    Draw Major Bands
+                </label>
+            </div>
+
+            <div class="mb-2">
+                <label for="dateTimeAxisBandsFill" class="form-label">Axis Bands Fill:</label>
+                <input type="color" class="form-control form-control-color" id="dateTimeAxisBandsFill"
+                       value="@_dateTimeAxisBandsFill" @onchange="OnDateTimeAxisBandsFillChanged">
+            </div>
+        </div>
+
+        <!-- Second NumericAxis Configuration -->
+        <div class="mb-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">NumericAxis (Inner) Configuration</h6>
+
+            <div class="mb-2">
+                <label class="form-label">Axis Title:</label>
+                <input type="text" class="form-control form-control-sm"
+                       value="@_numericXAxis2Title" @onchange="OnNumericXAxis2TitleChanged">
+            </div>
+
+            <h6 class="mb-2 mt-3" style="font-size: 0.9rem;">Visible Range:</h6>
+            <div class="mb-2">
+                <label class="form-label">Range Min: @_numericXAxis2VisibleRangeMin</label>
+                <input type="range" class="form-range" min="0" max="15"
+                       value="@_numericXAxis2VisibleRangeMin" @onchange="OnNumericXAxis2VisibleRangeMinChanged">
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Range Max: @_numericXAxis2VisibleRangeMax</label>
+                <input type="range" class="form-range" min="15" max="30"
+                       value="@_numericXAxis2VisibleRangeMax" @onchange="OnNumericXAxis2VisibleRangeMaxChanged">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<h5>NumericAxis Demo</h5>
+<div style="display: flex; gap: 20px; margin-bottom: 30px;">
+    <div style="width: 700px;">
+        <SciChartSurface @ref="_sciChartRef" DivElementId="axisChart1" HeightAspect="2" WidthAspect="3" OnSciChartSurfaceRendered="OnChart1Rendered">
+            <XAxes>
+                <NumericAxis
+                    Id="xAxis"
+                    AxisTitle="@_xAxisTitle"
+                    VisibleRange="@_xVisibleRange"
+                    GrowBy="@_growBy"
+                    AutoRange="@_autoRange"
+                    IsVisible="@_isVisible"
+                    DrawMajorGridLines="@_drawMajorGridLines"
+                    DrawMinorGridLines="@_drawMinorGridLines"
+                    DrawMajorBands="@_drawMajorBands"
+                    AxisBandsFill="@_axisBandsFill"
+                    FlippedCoordinates="@_flippedCoordinates"
+                    MaxAutoTicks="@_maxAutoTicks"
+                    MinorsPerMajor="@_minorsPerMajor"
+                    AutoTicks="@_autoTicks" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis
+                    Id="yAxis"
+                    AxisTitle="@_yAxisTitle"
+                    VisibleRange="@_yVisibleRange"
+                    DrawMajorGridLines="@_drawMajorGridLines"
+                    DrawMinorGridLines="@_drawMinorGridLines"
+                    DrawMajorBands="@_drawMajorBands"
+                    AxisBandsFill="@_axisBandsFill" />
+            </YAxes>
+            <FastLineRenderableSeries
+                Id="lineSeries"
+                Stroke="#50C7E0"
+                StrokeThickness="2"
+                SeriesName="Sine Wave">
+                <XyDataSeries XValues="@xData" YValues="@yData" />
+            </FastLineRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+
+    <div style="overflow-y: auto; height: 467px; width: 400px;">
+        <!-- Range Configuration -->
+        <div class="mb-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Range Configuration</h6>
+
+            <div class="mb-2">
+                <label class="form-label">Auto Range Mode:</label>
+                <select class="form-select form-select-sm" @onchange="OnAutoRangeChanged">
+                    <option value="@EAutoRange.Once">Once (default)</option>
+                    <option value="@EAutoRange.Always">Always</option>
+                    <option value="@EAutoRange.Never">Never</option>
+                </select>
+            </div>
+
+            <h6 class="mb-2 mt-3" style="font-size: 0.9rem;">X-Axis Range:</h6>
+            <div class="mb-2">
+                <label class="form-label">Visible Range Min: @_visibleRangeMin</label>
+                <input type="range" class="form-range" min="-10" max="0"
+                       value="@_visibleRangeMin" @onchange="OnVisibleRangeMinChanged">
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Visible Range Max: @_visibleRangeMax</label>
+                <input type="range" class="form-range" min="0" max="10"
+                       value="@_visibleRangeMax" @onchange="OnVisibleRangeMaxChanged">
+            </div>
+
+            <h6 class="mb-2 mt-3" style="font-size: 0.9rem;">Y-Axis Range:</h6>
+            <div class="mb-2">
+                <label class="form-label">Visible Range Min: @_yVisibleRangeMin</label>
+                <input type="range" class="form-range" min="-2" max="0"
+                       value="@_yVisibleRangeMin" @onchange="OnYVisibleRangeMinChanged">
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Visible Range Max: @_yVisibleRangeMax</label>
+                <input type="range" class="form-range" min="0" max="2"
+                       value="@_yVisibleRangeMax" @onchange="OnYVisibleRangeMaxChanged">
+            </div>
+
+            <h6 class="mb-2 mt-3" style="font-size: 0.9rem;">Common:</h6>
+            <div class="mb-2">
+                <label class="form-label">Grow By: @_growByValue</label>
+                <input type="range" class="form-range" min="0" max="0.5"
+                       value="@_growByValue" @onchange="OnGrowByChanged">
+            </div>
+        </div>
+
+        <!-- Title Configuration -->
+        <div class="mb-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Title Configuration</h6>
+
+            <div class="mb-2">
+                <label class="form-label">X-Axis Title:</label>
+                <input type="text" class="form-control form-control-sm"
+                       value="@_xAxisTitle" @onchange="OnXAxisTitleChanged">
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Y-Axis Title:</label>
+                <input type="text" class="form-control form-control-sm"
+                       value="@_yAxisTitle" @onchange="OnYAxisTitleChanged">
+            </div>
+        </div>
+
+        <!-- Grid & Tick Configuration -->
+        <div class="mb-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Grid & Tick Configuration</h6>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="drawMajorGridLines"
+                       checked="@_drawMajorGridLines" @onchange="OnDrawMajorGridLinesChanged">
+                <label class="form-check-label" for="drawMajorGridLines">
+                    Draw Major Grid Lines
+                </label>
+            </div>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="drawMinorGridLines"
+                       checked="@_drawMinorGridLines" @onchange="OnDrawMinorGridLinesChanged">
+                <label class="form-check-label" for="drawMinorGridLines">
+                    Draw Minor Grid Lines
+                </label>
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Max Auto Ticks: @_maxAutoTicks</label>
+                <input type="range" class="form-range" min="5" max="20" step="1"
+                       value="@_maxAutoTicks" @onchange="OnMaxAutoTicksChanged">
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Minors Per Major: @_minorsPerMajor</label>
+                <input type="range" class="form-range" min="1" max="10" step="1"
+                       value="@_minorsPerMajor" @onchange="OnMinorsPerMajorChanged">
+            </div>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="autoTicks"
+                       checked="@_autoTicks" @onchange="OnAutoTicksChanged">
+                <label class="form-check-label" for="autoTicks">
+                    Auto Ticks
+                </label>
+            </div>
+        </div>
+
+        <!-- Visual Styling -->
+        <div class="mb-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Visual Styling</h6>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="drawMajorBands"
+                       checked="@_drawMajorBands" @onchange="OnDrawMajorBandsChanged">
+                <label class="form-check-label" for="drawMajorBands">
+                    Draw Major Bands
+                </label>
+            </div>
+
+            <div class="mb-2">
+                <label for="axisBandsFill" class="form-label">Axis Bands Fill:</label>
+                <input type="color" class="form-control form-control-color" id="axisBandsFill"
+                       value="@_axisBandsFill" @onchange="OnAxisBandsFillChanged">
+                <small class="form-text text-muted">Enable "Draw Major Bands" to see the effect</small>
+            </div>
+        </div>
+
+        <!-- Advanced Options -->
+        <div class="mb-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Advanced Options</h6>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="isVisible"
+                       checked="@_isVisible" @onchange="OnIsVisibleChanged">
+                <label class="form-check-label" for="isVisible">
+                    Axis Visible
+                </label>
+            </div>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="flippedCoordinates"
+                       checked="@_flippedCoordinates" @onchange="OnFlippedCoordinatesChanged">
+                <label class="form-check-label" for="flippedCoordinates">
+                    Flipped Coordinates
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h5>CategoryAxis Demo</h5>
+<div style="display: flex; gap: 20px; margin-bottom: 30px;">
+    <div style="width: 700px;">
+        <SciChartSurface @ref="_sciChartRef2" DivElementId="axisChart2" HeightAspect="2" WidthAspect="3" OnSciChartSurfaceRendered="OnChart2Rendered">
+            <XAxes>
+                <CategoryAxis
+                    Id="categoryXAxis"
+                    AxisTitle="@_categoryAxisTitle"
+                    Labels="@_categoryLabels"
+                    VisibleRange="@_categoryVisibleRange"
+                    DrawMajorGridLines="@_categoryDrawMajorGridLines"
+                    DrawMajorBands="@_categoryDrawMajorBands"
+                    AxisBandsFill="@_categoryAxisBandsFill" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis
+                    Id="categoryYAxis"
+                    AxisTitle="Sales"
+                    AutoRange="@EAutoRange.Always" />
+            </YAxes>
+            <FastColumnRenderableSeries
+                Id="columnSeries"
+                Fill="#50C7E0"
+                SeriesName="Monthly Sales">
+                <XyDataSeries XValues="@categoryXData" YValues="@categoryYData" />
+            </FastColumnRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+
+    <div style="overflow-y: auto; height: 467px; width: 400px;">
+        <!-- CategoryAxis Configuration -->
+        <div class="mb-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">CategoryAxis Configuration</h6>
+
+            <div class="mb-2">
+                <label class="form-label">Axis Title:</label>
+                <input type="text" class="form-control form-control-sm"
+                       value="@_categoryAxisTitle" @onchange="OnCategoryAxisTitleChanged">
+            </div>
+
+            <h6 class="mb-2 mt-3" style="font-size: 0.9rem;">Visible Range (by index):</h6>
+            <div class="mb-2">
+                <label class="form-label">Min Index: @_categoryVisibleRangeMin</label>
+                <input type="range" class="form-range" min="0" max="6"
+                       value="@_categoryVisibleRangeMin" @onchange="OnCategoryVisibleRangeMinChanged">
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Max Index: @_categoryVisibleRangeMax</label>
+                <input type="range" class="form-range" min="5" max="11"
+                       value="@_categoryVisibleRangeMax" @onchange="OnCategoryVisibleRangeMaxChanged">
+            </div>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="categoryDrawMajorGridLines"
+                       checked="@_categoryDrawMajorGridLines" @onchange="OnCategoryDrawMajorGridLinesChanged">
+                <label class="form-check-label" for="categoryDrawMajorGridLines">
+                    Draw Major Grid Lines
+                </label>
+            </div>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="categoryDrawMajorBands"
+                       checked="@_categoryDrawMajorBands" @onchange="OnCategoryDrawMajorBandsChanged">
+                <label class="form-check-label" for="categoryDrawMajorBands">
+                    Draw Major Bands
+                </label>
+            </div>
+
+            <div class="mb-2">
+                <label for="categoryAxisBandsFill" class="form-label">Axis Bands Fill:</label>
+                <input type="color" class="form-control form-control-color" id="categoryAxisBandsFill"
+                       value="@_categoryAxisBandsFill" @onchange="OnCategoryAxisBandsFillChanged">
+            </div>
+        </div>
+    </div>
+</div>

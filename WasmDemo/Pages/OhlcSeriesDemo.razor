@@ -1,0 +1,35 @@
+@page "/ohlc-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>OHLC Series Chart</PageTitle>
+<h1>OHLC Series Chart</h1>
+
+<p>This page demonstrates OHLC series in SciChart.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis />
+            </XAxes>
+            <YAxes>
+                <NumericAxis />
+            </YAxes>
+            <FastOhlcRenderableSeries
+                StrokeUp="#4CAF50"
+                StrokeDown="#F44336"
+                StrokeThickness="2"
+                DataPointWidth="0.8"
+                SeriesName="Stock Price">
+                <OhlcDataSeries
+                    XValues="@xData"
+                    OpenValues="@openData"
+                    HighValues="@highData"
+                    LowValues="@lowData"
+                    CloseValues="@closeData" />
+            </FastOhlcRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+</div>

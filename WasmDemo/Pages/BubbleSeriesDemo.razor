@@ -1,0 +1,59 @@
+@page "/bubble-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Bubble Series Chart</PageTitle>
+<h1>Bubble Series Chart</h1>
+
+<p>This page demonstrates bubble series in SciChart with XYZ data where Z controls bubble size.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis VisibleRange="@(new NumberRange { Min = 0, Max = 13 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis VisibleRange="@(new NumberRange { Min = 1, Max = 10 })" />
+            </YAxes>
+            <FastBubbleRenderableSeries
+                Id="bubble1"
+                ZMultiplier="1.5"
+                SeriesName="Bubble Data">
+                <BubbleSeriesDataLabelProvider
+                    MetadataSelector="(metadata) => metadata?.customText ?? 'N/A'"
+                    HorizontalTextPosition="EHorizontalTextPosition.Center"
+                    VerticalTextPosition="EVerticalTextPosition.Center"
+                    IsEnabled="true"
+                    PointCountThreshold="20"
+                    Style="@(new TDataLabelStyle { FontSize = 12, FontFamily = "Arial" })"
+                    Color="white" />
+                <XyzDataSeries @ref="_xyzDataSeriesBubble1Ref"
+                    XValues="@xData"
+                    YValues="@yData"
+                    ZValues="@zData"
+                    Metadata="@metadata" />
+            </FastBubbleRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div style="margin-left: 20px;">
+        <button type="button" class="btn btn-secondary mt-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button type="button" class="btn btn-secondary mt-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+        <br />
+        <div class="mt-3">
+            <h5>Description:</h5>
+            <ul style="font-size: 0.9em;">
+                <li>Bubble size controlled by Z values</li>
+                <li>Data labels centered on each bubble</li>
+                <li>Labels display metadata customText for each point</li>
+                <li>ZMultiplier adjusts bubble sizes</li>
+            </ul>
+        </div>
+    </div>
+</div>

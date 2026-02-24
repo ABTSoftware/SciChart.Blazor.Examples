@@ -1,0 +1,51 @@
+@page "/non-uniform-heatmap-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Non-Uniform Heatmap Series Chart</PageTitle>
+<h1>Non-Uniform Heatmap Series Chart</h1>
+
+<p>This page demonstrates non-uniform heatmap series in SciChart showing 2D data visualization with irregular grid spacing.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis />
+            </XAxes>
+            <YAxes>
+                <NumericAxis />
+            </YAxes>
+            <NonUniformHeatmapRenderableSeries
+                Id="heatmap1"
+                ColorMap="@colorMap"
+                UseLinearTextureFiltering="true"
+                SeriesName="Temperature Map">
+                <HeatmapDataLabelProvider
+                    NumericFormat="ENumericFormat.Decimal"
+                    Precision="0"
+                    IsEnabled="true"
+                    Style="@(new TDataLabelStyle { FontSize = 11, FontFamily = "Arial" })"
+                    Color="white" />
+                <NonUniformHeatmapDataSeries
+                    XCellOffsets="@xCellOffsets"
+                    YCellOffsets="@yCellOffsets"
+                    ZValues="@zValues" />
+            </NonUniformHeatmapRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div style="margin-left: 20px;">
+        <div class="mt-3">
+            <h5>Description:</h5>
+            <ul style="font-size: 0.9em;">
+                <li>Non-uniform heatmap with irregular grid spacing</li>
+                <li>Data labels display Z values (temperature)</li>
+                <li>NumericFormat set to Decimal with Precision 0</li>
+                <li>Cells get progressively wider and taller</li>
+                <li>Linear texture filtering for smooth color interpolation</li>
+                <li>Color gradient: Blue (cold) → Green (medium) → Red (hot)</li>
+            </ul>
+        </div>
+    </div>
+</div>

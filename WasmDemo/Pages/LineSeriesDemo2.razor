@@ -1,0 +1,42 @@
+@page "/line-series-demo2"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Simple Line Series Chart</PageTitle>
+<h1>Simple Line Series Chart</h1>
+
+<div id="demo" style="width: 600px;">
+    <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3" OnSciChartSurfaceRendered="HandleSurfaceRendered">
+        <XAxes>
+            <NumericAxis VisibleRange="@(new NumberRange { Min = 0 , Max = 5 })"/>
+        </XAxes>
+        <YAxes>
+            <NumericAxis VisibleRange="@(new NumberRange { Min = -1.5, Max = 1.5 })" />
+        </YAxes>
+        @foreach (var series in _seriesList)
+        {
+            <FastLineRenderableSeries
+                Id="@series.Id"
+                Stroke="@series.Color"
+                StrokeThickness="2"
+                SeriesName="@series.Name"
+                PointMarker="@(new PointMarker { Type = EPointMarkerType.Ellipse, Width = 7, Height = 7, Fill = series.Color, Stroke = series.Color })">
+                <XyDataSeries @ref="series.XyDataSeriesRef" DataSeriesName="@($"Data series with phase {series.Phase}")" />
+            </FastLineRenderableSeries>
+        }
+        <MouseWheelZoomModifier />
+        <ZoomPanModifier />
+        <LegendModifier />
+    </SciChartSurface>
+
+    <div class="mt-3">
+        <button id="btnAddSeries" type="button" class="btn btn-primary" @onclick="AddSeries">
+            Add Series
+        </button>
+        <button id="btnRemoveSeries" type="button" class="btn btn-danger ms-2" @onclick="RemoveSeries">
+            Remove Series
+        </button>
+        <button id="btnAppendData" type="button" class="btn btn-success ms-2" @onclick="AppendDataToLastSeries">
+            Add 10 data points to last series
+        </button>
+    </div>
+</div>

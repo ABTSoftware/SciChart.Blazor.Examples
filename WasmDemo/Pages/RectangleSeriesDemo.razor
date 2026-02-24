@@ -1,0 +1,80 @@
+@page "/rectangle-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Rectangle Series Chart</PageTitle>
+<h1>Rectangle Series Chart</h1>
+
+<p>This page demonstrates rectangle series using XyxyDataSeries with all available properties.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis Id="xAxis" AxisTitle="X Axis" VisibleRange="@(new NumberRange { Min = 0, Max = 9 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis Id="yAxis" AxisTitle="Y Axis" />
+            </YAxes>
+            <FastRectangleRenderableSeries
+                Id="rectangle1"
+                Stroke="#FF6B35"
+                StrokeThickness="2"
+                Fill="#FF6B3544"
+                SeriesName="Rectangles"
+                DataPointWidth="0.8"
+                DataPointWidthMode="EDataPointWidthMode.Relative"
+                TopCornerRadius="5"
+                BottomCornerRadius="2"
+                FillLinearGradient="@rectangleGradient"
+                DefaultY1="0"
+                ColumnXMode="EColumnMode.Mid"
+                ColumnYMode="EColumnYMode.TopBottom"
+                Opacity="0.8">
+                <RectangleSeriesDataLabelProvider
+                    MetadataSelector="(metadata) => metadata?.customText ?? 'N/A'"
+                    IsEnabled="true"
+                    PointCountThreshold="20"
+                    Style="@(new TDataLabelStyle { FontSize = 12, FontFamily = "Arial" })"
+                    Color="white" />
+                <XyxyDataSeries @ref="_xyxyDataSeriesRectangle1Ref"
+                    XValues="@xValues"
+                    YValues="@yValues"
+                    X1Values="@x1Values"
+                    Y1Values="@y1Values"
+                    Metadata="@metadata" />
+            </FastRectangleRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div style="margin-left: 20px;">
+        <button type="button" class="btn btn-secondary mt-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button type="button" class="btn btn-secondary mt-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+        <br />
+        <button type="button" class="btn btn-secondary mt-2" @onclick="ToggleGradient">
+            @(useGradient ? "Disable" : "Enable") Gradient
+        </button>
+        <div class="mt-3">
+            <h5>Properties Demo:</h5>
+            <ul style="font-size: 0.9em;">
+                <li><strong>Fill:</strong> #FF6B3544 (with alpha)</li>
+                <li><strong>Stroke:</strong> #FF6B35</li>
+                <li><strong>DataPointWidth:</strong> 0.8</li>
+                <li><strong>DataPointWidthMode:</strong> Relative</li>
+                <li><strong>TopCornerRadius:</strong> 5px</li>
+                <li><strong>BottomCornerRadius:</strong> 2px</li>
+                <li><strong>DefaultY1:</strong> 0 (baseline)</li>
+                <li><strong>ColumnXMode:</strong> Mid</li>
+                <li><strong>ColumnYMode:</strong> TopBottom</li>
+                <li><strong>Opacity:</strong> 0.8</li>
+                <li><strong>Data Labels:</strong> Display metadata customText</li>
+                <li><strong>MetadataSelector:</strong> Shows "Rect 1", "Rect 2", etc.</li>
+            </ul>
+        </div>
+    </div>
+</div>

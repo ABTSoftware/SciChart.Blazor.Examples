@@ -1,0 +1,41 @@
+@page "/text-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Text Series Chart</PageTitle>
+
+<h1>Text Series Chart</h1>
+
+<p>This example demonstrates the Fast Text Series for displaying text labels at data points.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis Id="xAxis" AxisTitle="X Axis" VisibleRange="@(new NumberRange { Min = 0, Max = 12 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis Id="yAxis" AxisTitle="Y Axis" />
+            </YAxes>
+
+            <FastTextRenderableSeries
+                Id="text1"
+                Stroke="#4682B4"
+                StrokeThickness="2"
+                SeriesName="Text Labels">
+                <XyTextDataSeries @ref="_xyTextDataSeriesText1Ref"
+                    XValues="@xData"
+                    YValues="@yData"
+                    TextValues="@textData" />
+                @* <DataLabelProvider Style="@(new TDataLabelStyle { FontSize = 20, FontFamily = "Arial" })" Color="white" /> TODO: add support *@
+            </FastTextRenderableSeries>
+
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div>
+        <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendData">
+            Append Data
+        </button>
+    </div>
+</div>

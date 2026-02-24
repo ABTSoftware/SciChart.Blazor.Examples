@@ -1,0 +1,47 @@
+@page "/errorbars-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Error Bars Series Chart</PageTitle>
+<h1>Error Bars Series Chart</h1>
+
+<p>This page demonstrates error bars series in SciChart showing data with error ranges.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis VisibleRange="@(new NumberRange { Min = -1, Max = 7 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis />
+            </YAxes>
+            <FastErrorBarsRenderableSeries
+                Id="errorbars1"
+                Stroke="#FF6347"
+                StrokeThickness="2"
+                DataPointWidth="0.3"
+                ErrorMode="EErrorMode.Both"
+                ErrorDirection="EErrorDirection.Vertical"
+                DrawWhiskers="true"
+                DrawConnector="true"
+                SeriesName="Measurement Data with Errors">
+                <HlcDataSeries @ref="_hlcDataSeriesErrorbars1Ref"
+                    XValues="@xData"
+                    YValues="@yData"
+                    HighValues="@highData"
+                    LowValues="@lowData" />
+            </FastErrorBarsRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div>
+        <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+    </div>
+</div>

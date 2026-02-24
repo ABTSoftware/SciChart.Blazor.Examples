@@ -1,0 +1,37 @@
+@page "/candlestick-series-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Candlestick Series Chart</PageTitle>
+<h1>Candlestick Series Chart</h1>
+
+<p>This page demonstrates candlestick series in SciChart.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis />
+            </XAxes>
+            <YAxes>
+                <NumericAxis />
+            </YAxes>
+            <FastCandlestickRenderableSeries
+                DataPointWidth="0.7"
+                StrokeUp="#4CAF50"
+                BrushUp="#4CAF5088"
+                StrokeDown="#F44336"
+                BrushDown="#F4433688"
+                StrokeThickness="1"
+                SeriesName="Stock Price">
+                <OhlcDataSeries
+                    XValues="@xData"
+                    OpenValues="@openData"
+                    HighValues="@highData"
+                    LowValues="@lowData"
+                    CloseValues="@closeData" />
+            </FastCandlestickRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+</div>

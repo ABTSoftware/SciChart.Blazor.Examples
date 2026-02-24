@@ -1,0 +1,215 @@
+﻿@page "/annotations-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Annotations</PageTitle>
+
+<div id="demo" style="display: flex; gap: 20px; align-items: flex-start;">
+    <div style="width: 600px; flex-shrink: 0;">
+        <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis />
+            </XAxes>
+            <YAxes>
+                <NumericAxis />
+            </YAxes>
+            @foreach (var ann in _lineAnnotations)
+            {
+                <LineAnnotation @key="ann.Id"
+                                Id="@ann.Id"
+                                X1="@ann.X1" Y1="@ann.Y1" X2="@ann.X2" Y2="@ann.Y2"
+                                Stroke="@ann.Stroke"
+                                StrokeThickness="@ann.StrokeThickness"
+                                IsEditable="@ann.IsEditable"
+                                OnDragStarted="HandleDragStarted"
+                                OnDragEnded="HandleDragEnded"
+                                OnDragDelta="HandleDragDelta"
+                                OnClicked="HandleClicked"
+                                OnHovered="HandleHovered" />
+            }
+            @foreach (var ann in _lineArrowAnnotations)
+            {
+                <LineArrowAnnotation @key="ann.Id"
+                                     Id="@ann.Id"
+                                     X1="@ann.X1" Y1="@ann.Y1" X2="@ann.X2" Y2="@ann.Y2"
+                                     Stroke="@ann.Stroke"
+                                     StrokeThickness="@ann.StrokeThickness"
+                                     IsEditable="@ann.IsEditable"
+                                     ArrowHeadPosition="@ann.ArrowHeadPosition" />
+            }
+            @foreach (var ann in _nativeTextAnnotations)
+            {
+                <NativeTextAnnotation @key="ann.Id"
+                                      Id="@ann.Id"
+                                      X1="@ann.X1" Y1="@ann.Y1"
+                                      Text="@ann.Text"
+                                      FontSize="@ann.FontSize"
+                                      TextColor="@ann.TextColor"
+                                      Background="@ann.Background"
+                                      IsEditable="@ann.IsEditable"
+                                      HorizontalAnchorPoint="@ann.HorizontalAnchorPoint"
+                                      VerticalAnchorPoint="@ann.VerticalAnchorPoint" />
+            }
+            @foreach (var ann in _arcAnnotations)
+            {
+                <ArcAnnotation @key="ann.Id"
+                               Id="@ann.Id"
+                               X1="@ann.X1" Y1="@ann.Y1" X2="@ann.X2" Y2="@ann.Y2"
+                               Stroke="@ann.Stroke"
+                               StrokeThickness="@ann.StrokeThickness"
+                               Fill="@ann.Fill"
+                               InnerRadius="@ann.InnerRadius"
+                               Height="@ann.Height"
+                               IsEditable="@ann.IsEditable" />
+            }
+            @foreach (var ann in _axisMarkerAnnotations)
+            {
+                <AxisMarkerAnnotation @key="ann.Id"
+                                      Id="@ann.Id"
+                                      Y1="@ann.Y1"
+                                      FontSize="@ann.FontSize"
+                                      FontFamily="@ann.FontFamily"
+                                      FontWeight="@ann.FontWeight"
+                                      FontStyle="@ann.FontStyle"
+                                      Color="@ann.Color"
+                                      Padding="@ann.Padding"
+                                      BackgroundColor="@ann.BackgroundColor"
+                                      FormattedValue="@ann.FormattedValue"
+                                      Image="@ann.Image"
+                                      ImageWidth="@ann.ImageWidth"
+                                      ImageHeight="@ann.ImageHeight"
+                                      IsEditable="@ann.IsEditable" />
+            }
+            @foreach (var ann in _boxAnnotations)
+            {
+                <BoxAnnotation @key="ann.Id"
+                               Id="@ann.Id"
+                               X1="@ann.X1" Y1="@ann.Y1" X2="@ann.X2" Y2="@ann.Y2"
+                               Stroke="@ann.Stroke"
+                               StrokeThickness="@ann.StrokeThickness"
+                               Fill="@ann.Fill"
+                               IsEditable="@ann.IsEditable" />
+            }
+            @foreach (var ann in _customAnnotations)
+            {
+                <CustomAnnotation @key="ann.Id"
+                                  Id="@ann.Id"
+                                  X1="@ann.X1" Y1="@ann.Y1"
+                                  XCoordShift="@ann.XCoordShift"
+                                  YCoordShift="@ann.YCoordShift"
+                                  VerticalAnchorPoint="@ann.VerticalAnchorPoint"
+                                  HorizontalAnchorPoint="@ann.HorizontalAnchorPoint"
+                                  SvgString="@ann.SvgString"
+                                  IsEditable="@ann.IsEditable" />
+            }
+            @foreach (var ann in _horizontalLineAnnotations)
+            {
+                <HorizontalLineAnnotation @key="ann.Id"
+                                          Id="@ann.Id"
+                                          Y1="@ann.Y1"
+                                          Stroke="@ann.Stroke"
+                                          StrokeThickness="@ann.StrokeThickness"
+                                          StrokeDashArray="@ann.StrokeDashArray"
+                                          ShowLabel="@ann.ShowLabel"
+                                          AxisLabelStroke="@ann.AxisLabelStroke"
+                                          AxisLabelFill="@ann.AxisLabelFill"
+                                          AxisFontSize="@ann.AxisFontSize"
+                                          AxisFontFamily="@ann.AxisFontFamily"
+                                          LabelPlacement="@ann.LabelPlacement"
+                                          LabelValue="@ann.LabelValue"
+                                          DragOnLine="@ann.DragOnLine"
+                                          DragOnLabel="@ann.DragOnLabel"
+                                          HorizontalAlignment="@ann.HorizontalAlignment"
+                                          VerticalAlignment="@ann.VerticalAlignment"
+                                          IsEditable="@ann.IsEditable" />
+            }
+            @foreach (var ann in _verticalLineAnnotations)
+            {
+                <VerticalLineAnnotation @key="ann.Id"
+                                        Id="@ann.Id"
+                                        X1="@ann.X1"
+                                        Stroke="@ann.Stroke"
+                                        StrokeThickness="@ann.StrokeThickness"
+                                        StrokeDashArray="@ann.StrokeDashArray"
+                                        ShowLabel="@ann.ShowLabel"
+                                        AxisLabelStroke="@ann.AxisLabelStroke"
+                                        AxisLabelFill="@ann.AxisLabelFill"
+                                        AxisFontSize="@ann.AxisFontSize"
+                                        AxisFontFamily="@ann.AxisFontFamily"
+                                        LabelPlacement="@ann.LabelPlacement"
+                                        LabelValue="@ann.LabelValue"
+                                        DragOnLine="@ann.DragOnLine"
+                                        DragOnLabel="@ann.DragOnLabel"
+                                        HorizontalAlignment="@ann.HorizontalAlignment"
+                                        VerticalAlignment="@ann.VerticalAlignment"
+                                        IsEditable="@ann.IsEditable" />
+            }
+            @foreach (var ann in _textAnnotations)
+            {
+                <TextAnnotation @key="ann.Id"
+                                Id="@ann.Id"
+                                X1="@ann.X1" Y1="@ann.Y1"
+                                Text="@ann.Text"
+                                TextColor="@ann.TextColor"
+                                FontSize="@ann.FontSize"
+                                FontFamily="@ann.FontFamily"
+                                FontWeight="@ann.FontWeight"
+                                Background="@ann.Background"
+                                Padding="@ann.Padding"
+                                XCoordShift="@ann.XCoordShift"
+                                YCoordShift="@ann.YCoordShift"
+                                VerticalAnchorPoint="@ann.VerticalAnchorPoint"
+                                HorizontalAnchorPoint="@ann.HorizontalAnchorPoint"
+                                IsEditable="@ann.IsEditable" />
+            }
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+
+    <div>
+        <table class="table table-sm table-bordered" style="font-size: 0.85rem;">
+            <tbody>
+                <tr>
+                    <td>LineAnnotation<br /><button id="lineAdd" class="btn btn-sm btn-primary me-1" @onclick="AddLineAnnotation">Add</button><button id="lineRemove" class="btn btn-sm btn-danger me-1" @onclick="RemoveLineAnnotation">Del</button><button id="lineUpdateColor" class="btn btn-sm btn-secondary" @onclick="UpdateLineAnnotationColor">Upd</button></td>
+                    <td><input id="lineColor" type="text" class="form-control form-control-sm" @bind="_lineColor" style="width: 110px;" /></td>
+                </tr>
+                <tr>
+                    <td>LineArrowAnnotation<br /><button id="lineArrowAdd" class="btn btn-sm btn-primary me-1" @onclick="AddLineArrowAnnotation">Add</button><button id="lineArrowRemove" class="btn btn-sm btn-danger me-1" @onclick="RemoveLineArrowAnnotation">Del</button><button id="lineArrowUpdateColor" class="btn btn-sm btn-secondary" @onclick="UpdateLineArrowAnnotationColor">Upd</button></td>
+                    <td><input id="lineArrowColor" type="text" class="form-control form-control-sm" @bind="_lineArrowColor" style="width: 110px;" /></td>
+                </tr>
+                <tr>
+                    <td>NativeTextAnnotation<br /><button id="nativeTextAdd" class="btn btn-sm btn-primary me-1" @onclick="AddNativeTextAnnotation">Add</button><button id="nativeTextRemove" class="btn btn-sm btn-danger me-1" @onclick="RemoveNativeTextAnnotation">Del</button><button id="nativeTextUpdateColor" class="btn btn-sm btn-secondary" @onclick="UpdateNativeTextAnnotationColor">Upd</button></td>
+                    <td><input id="nativeTextColor" type="text" class="form-control form-control-sm" @bind="_nativeTextColor" style="width: 110px;" /></td>
+                </tr>
+                <tr>
+                    <td>ArcAnnotation<br /><button id="arcAdd" class="btn btn-sm btn-primary me-1" @onclick="AddArcAnnotation">Add</button><button id="arcRemove" class="btn btn-sm btn-danger me-1" @onclick="RemoveArcAnnotation">Del</button><button id="arcUpdateColor" class="btn btn-sm btn-secondary" @onclick="UpdateArcAnnotationColor">Upd</button></td>
+                    <td><input id="arcColor" type="text" class="form-control form-control-sm" @bind="_arcColor" style="width: 110px;" /></td>
+                </tr>
+                <tr>
+                    <td>AxisMarkerAnnotation<br /><button id="axisMarkerAdd" class="btn btn-sm btn-primary me-1" @onclick="AddAxisMarkerAnnotation">Add</button><button id="axisMarkerRemove" class="btn btn-sm btn-danger me-1" @onclick="RemoveAxisMarkerAnnotation">Del</button><button id="axisMarkerUpdateColor" class="btn btn-sm btn-secondary" @onclick="UpdateAxisMarkerAnnotationColor">Upd</button></td>
+                    <td><input id="axisMarkerColor" type="text" class="form-control form-control-sm" @bind="_axisMarkerColor" style="width: 110px;" /></td>
+                </tr>
+                <tr>
+                    <td>BoxAnnotation<br /><button id="boxAdd" class="btn btn-sm btn-primary me-1" @onclick="AddBoxAnnotation">Add</button><button id="boxRemove" class="btn btn-sm btn-danger me-1" @onclick="RemoveBoxAnnotation">Del</button><button id="boxUpdateColor" class="btn btn-sm btn-secondary" @onclick="UpdateBoxAnnotationColor">Upd</button></td>
+                    <td><input id="boxColor" type="text" class="form-control form-control-sm" @bind="_boxColor" style="width: 110px;" /></td>
+                </tr>
+                <tr>
+                    <td>CustomAnnotation<br /><button id="customAdd" class="btn btn-sm btn-primary me-1" @onclick="AddCustomAnnotation">Add</button><button id="customRemove" class="btn btn-sm btn-danger" @onclick="RemoveCustomAnnotation">Del</button></td>
+                    <td><span class="text-muted">N/A</span></td>
+                </tr>
+                <tr>
+                    <td>HorizontalLineAnnotation<br /><button id="hLineAdd" class="btn btn-sm btn-primary me-1" @onclick="AddHorizontalLineAnnotation">Add</button><button id="hLineRemove" class="btn btn-sm btn-danger me-1" @onclick="RemoveHorizontalLineAnnotation">Del</button><button id="hLineUpdateColor" class="btn btn-sm btn-secondary" @onclick="UpdateHorizontalLineAnnotationColor">Upd</button></td>
+                    <td><input id="hLineColor" type="text" class="form-control form-control-sm" @bind="_hLineColor" style="width: 110px;" /></td>
+                </tr>
+                <tr>
+                    <td>VerticalLineAnnotation<br /><button id="vLineAdd" class="btn btn-sm btn-primary me-1" @onclick="AddVerticalLineAnnotation">Add</button><button id="vLineRemove" class="btn btn-sm btn-danger me-1" @onclick="RemoveVerticalLineAnnotation">Del</button><button id="vLineUpdateColor" class="btn btn-sm btn-secondary" @onclick="UpdateVerticalLineAnnotationColor">Upd</button></td>
+                    <td><input id="vLineColor" type="text" class="form-control form-control-sm" @bind="_vLineColor" style="width: 110px;" /></td>
+                </tr>
+                <tr>
+                    <td>TextAnnotation<br /><button id="textAdd" class="btn btn-sm btn-primary me-1" @onclick="AddTextAnnotation">Add</button><button id="textRemove" class="btn btn-sm btn-danger me-1" @onclick="RemoveTextAnnotation">Del</button><button id="textUpdateColor" class="btn btn-sm btn-secondary" @onclick="UpdateTextAnnotationColor">Upd</button></td>
+                    <td><input id="textColor" type="text" class="form-control form-control-sm" @bind="_textColor" style="width: 110px;" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

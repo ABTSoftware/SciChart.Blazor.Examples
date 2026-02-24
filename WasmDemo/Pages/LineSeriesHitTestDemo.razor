@@ -1,0 +1,56 @@
+@page "/line-series-hittest-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Line Series Hit Test Demo</PageTitle>
+<h1>Line Series Hit Test Demo</h1>
+
+<p>Click on the line to see hit test visualization. Mode: <strong>@_hitTestMode</strong></p>
+
+<div style="width: 800px;">
+    <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3" OnSciChartSurfaceRendered="HandleSurfaceRendered">
+        <XAxes>
+            <NumericAxis GrowBy="@(new NumberRange { Min = 0.05, Max = 0.05 })" />
+        </XAxes>
+        <YAxes>
+            <NumericAxis GrowBy="@(new NumberRange { Min = 0.05, Max = 0.05 })" />
+        </YAxes>
+        <FastLineRenderableSeries Stroke="#50C7E0"
+                                  StrokeThickness="3"
+                                  SeriesName="Line Series"
+                                  OnHitTest="HandleHitTest"
+                                  OnHitTestDataPoint="HandleHitTestDataPoint"
+                                  PointMarker="@(new PointMarker { Type = EPointMarkerType.Ellipse, Width = 11, Height = 11, Fill = "#50C7E033", Stroke = "#50C7E0" })">
+            <XyDataSeries DataSeriesName="Line Series"
+                          XValues="@_xValues"
+                          YValues="@_yValues" />
+        </FastLineRenderableSeries>
+        <XyScatterRenderableSeries Id="hit_scatter"
+                                   PointMarker="@(new PointMarker { Type = EPointMarkerType.Ellipse, Width = 25, Height = 25, Fill = "#00CED1", Stroke = "#00CED1", StrokeThickness = 0 })">
+            <XyDataSeries @ref="_xyDataSeriesHitScatterRef"
+                          XValues="@(Array.Empty<double>())"
+                          YValues="@(Array.Empty<double>())" />
+        </XyScatterRenderableSeries>
+        <LineAnnotation Id="hit_line"
+                        IsHidden="@_lineAnnotation.IsHidden"
+                        StrokeThickness="5"
+                        Stroke="@_lineAnnotation.Stroke"
+                        X1="@_lineAnnotation.X1" Y1="@_lineAnnotation.Y1" X2="@_lineAnnotation.X2" Y2="@_lineAnnotation.Y2" />
+        <CustomAnnotation IsHidden="@_customAnnotationRed.IsHidden"
+                          X1="@_customAnnotationRed.X1" Y1="@_customAnnotationRed.Y1"
+                          HorizontalAnchorPoint="EHorizontalAnchorPoint.Center"
+                          VerticalAnchorPoint="EVerticalAnchorPoint.Center" SvgString="@_svgCirleRed" />
+        <CustomAnnotation IsHidden="@_customAnnotationBlue.IsHidden"
+                          X1="@_customAnnotationBlue.X1" Y1="@_customAnnotationBlue.Y1"
+                          HorizontalAnchorPoint="EHorizontalAnchorPoint.Center"
+                          VerticalAnchorPoint="EVerticalAnchorPoint.Center" SvgString="@_svgCirleBlue" />
+    </SciChartSurface>
+
+    <div class="mt-3">
+        <button type="button" class="btn btn-primary" @onclick="ToggleHitTestMode">
+            Switch to @(_hitTestMode == EHitTestMode.HitTest ? "HitTestDataPoint" : "HitTest")
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" @onclick="ClearVisualizations">
+            Clear Visualization
+        </button>
+    </div>
+</div>

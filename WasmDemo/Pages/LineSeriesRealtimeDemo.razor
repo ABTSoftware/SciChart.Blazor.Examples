@@ -1,0 +1,61 @@
+@page "/line-series-realtime-demo"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Realtime JavaScript Chart Performance Demo</PageTitle>
+<h1>Realtime JavaScript Chart Performance Demo</h1>
+
+<p>This page demonstrates a realtime updating line series chart with performance metrics.</p>
+
+<div style="width: 800px;">
+    <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3" OnSciChartSurfaceRendered="HandleSurfaceRendered">
+        <XAxes>
+            <NumericAxis AutoRange="@_autoRange" />
+        </XAxes>
+        <YAxes>
+            <NumericAxis AutoRange="@_autoRange" />
+        </YAxes>
+        <FastLineRenderableSeries
+            Id="series_1"
+            Stroke="#FF6600"
+            StrokeThickness="2"
+            SeriesName="Series 1">
+            <XyDataSeries @ref="_xyDataSeriesLine1Ref" ContainsNaN="false" IsSorted="true" />
+        </FastLineRenderableSeries>
+        <FastLineRenderableSeries
+            Id="series_2"
+            Stroke="#50C7E0"
+            StrokeThickness="2"
+            SeriesName="Series 2">
+            <XyDataSeries @ref="_xyDataSeriesLine2Ref" ContainsNaN="false" IsSorted="true" />
+        </FastLineRenderableSeries>
+        <FastLineRenderableSeries
+            Id="series_3"
+            Stroke="#E26565"
+            StrokeThickness="2"
+            SeriesName="Series 3">
+            <XyDataSeries @ref="_xyDataSeriesLine3Ref" ContainsNaN="false" IsSorted="true" />
+        </FastLineRenderableSeries>
+        @* <RubberBandXyZoomModifier /> Breaks on Clear button, with TypeError: Cannot read properties of undefined (reading 'removeChild') *@
+        <MouseWheelZoomModifier />
+        <XAxisDragModifier />
+        <YAxisDragModifier />
+        <ZoomExtentsModifier />
+        <LegendModifier />
+    </SciChartSurface>
+
+    <div class="mt-3">
+        <button type="button" class="btn btn-primary" @onclick="StartUpdates">
+            Start
+        </button>
+        <button type="button" class="btn btn-danger ms-2" @onclick="StopUpdates">
+            Stop
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" @onclick="ClearData">
+            Clear
+        </button>
+    </div>
+
+    <div class="mt-3">
+        <strong>Datapoints:</strong> @_datapoints | <strong>FPS:</strong> @_fps
+    </div>
+</div>
