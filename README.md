@@ -2,6 +2,20 @@
 
 ![SciChart Blazor Wasm Demo image](docs/scichart_blazor_wasm_demo.png)
 
+## How to run the demo
+
+Most of examples are in WasmDemo. In order to run:
+
+* `cd WasmDemo`
+* `dotnet run`
+* Open link in the browser http://localhost:5078/
+
+For running ServerDemo:
+
+* `cd ServerDemo`
+* `dotnet run`
+* Open link in the browser http://localhost:5175/
+
 ## How to use SciChartBlazor from scratch
 
 **Steps to create a Wasm Demo from scratch**

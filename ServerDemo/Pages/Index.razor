@@ -1,9 +1,23 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>SciChart.Blazor Server Demo</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>SciChart.Blazor Server Demo</h1>
 
-Welcome to your new app.
+<div>Navigate through the menu on the left to switch different SciChart examples. </div>
+<div>This is SciChart surface with two axes and chart modifiers. Use mouse wheel to zoom and hold left mouse key to pan </div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div id="demo" style="display: flex; gap: 20px; align-items: flex-start;">
+    <div style="width: 600px; flex-shrink: 0;">
+        <SciChartSurface HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis />
+            </XAxes>
+            <YAxes>
+                <NumericAxis />
+            </YAxes>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+</div>
