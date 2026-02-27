@@ -4,6 +4,17 @@
 
 ## How to run the demo
 
+### Setting up a package source
+
+SciChart.Blazor.dll is hosted on our beta Nuget feed for now. You'll need to add a package source to https://www.myget.org/F/abtsoftware-bleeding-edge/api/v3/index.json 
+
+Either: 
+- `dotnet nuget add source https://www.myget.org/F/abtsoftware-bleeding-edge/api/v3/index.json --name "ABT Bleeding Edge"`
+- Or, Visual Studio -> Tools -> Nuget Package Manager -> Package Manager Settings -> Package Sources & add package source 
+![Package Source image](docs/package-source.png)
+
+### Running the demo
+
 Most of examples are in WasmDemo. In order to run:
 
 * `cd WasmDemo`
