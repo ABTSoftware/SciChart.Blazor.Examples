@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SciChartBlazor" Version="4.0.93302" />
+    <PackageReference Include="SciChartBlazor" Version="5.0.178-alpha.1" />
   </ItemGroup>
 
 </Project>

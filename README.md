@@ -35,7 +35,7 @@ For running ServerDemo:
 2. Install SciChartBlazor nuget package
 	* `dotnet nuget add source https://www.myget.org/F/abtsoftware-bleeding-edge/api/v3/index.json --name "ABT Bleeding Edge"`
 	* `dotnet nuget list source`
-	* `dotnet add package SciChartBlazor --version 4.0.93302`
+	* `dotnet add package SciChartBlazor`
 3. Add imports to `_imports.razor` file
 	* `@using static Microsoft.AspNetCore.Components.Web.RenderMode`
 	* `@using SciChartBlazor.Components`
@@ -67,7 +67,7 @@ For running ServerDemo:
 
 SciChartBlazor is Blazor component library that wraps [SciChart.js](https://www.scichart.com/) — a high-performance WebGL charting library — enabling its use in Blazor Server and Blazor WebAssembly applications.
 
-Current version of nuget package supports only 2D charts, Polar Charts and Pie Charts are not supported at the moment. The package is based on SciChart.js version `4.0.933`.
+Current version of nuget package supports only 2D charts, Polar Charts and Pie Charts are not supported at the moment. The package is based on SciChart.js version `5.0.178`.
 All charts that are in the library support initial creation and data append. However, only FastLineRenderableSeries has been well tested at the moment.
 
 ## Getting Started
