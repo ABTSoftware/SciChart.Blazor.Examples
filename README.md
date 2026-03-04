@@ -27,18 +27,18 @@ For running ServerDemo:
 * `dotnet run`
 * Open link in the browser http://localhost:5175/
 
-## How to use SciChartBlazor from scratch
+## How to use SciChart.Blazor from scratch
 
 **Steps to create a Wasm Demo from scratch**
 
 1. Create a project `dotnet new blazorwasm -o MyBlazorWasmApp`
-2. Install SciChartBlazor nuget package
+2. Install SciChart.Blazor nuget package
 	* `dotnet nuget add source https://www.myget.org/F/abtsoftware-bleeding-edge/api/v3/index.json --name "ABT Bleeding Edge"`
 	* `dotnet nuget list source`
-	* `dotnet add package SciChartBlazor`
+	* `dotnet add package SciChart.Blazor`
 3. Add imports to `_imports.razor` file
 	* `@using static Microsoft.AspNetCore.Components.Web.RenderMode`
-	* `@using SciChartBlazor.Components`
+	* `@using SciChart.Blazor.Components`
 4. Create a Page under pages `Demo.razor`
 ```
 @page "/demo"
@@ -63,9 +63,9 @@ For running ServerDemo:
 ```
 5. Run the application
 
-# SciChartBlazor Nuget Readme
+# SciChart.Blazor Nuget Readme
 
-SciChartBlazor is Blazor component library that wraps [SciChart.js](https://www.scichart.com/) — a high-performance WebGL charting library — enabling its use in Blazor Server and Blazor WebAssembly applications.
+SciChart.Blazor is Blazor component library that wraps [SciChart.js](https://www.scichart.com/) — a high-performance WebGL charting library — enabling its use in Blazor Server and Blazor WebAssembly applications.
 
 Current version of nuget package supports only 2D charts, Polar Charts and Pie Charts are not supported at the moment. The package is based on SciChart.js version `5.0.178`.
 All charts that are in the library support initial creation and data append. However, only FastLineRenderableSeries has been well tested at the moment.
@@ -75,7 +75,7 @@ All charts that are in the library support initial creation and data append. How
 ### 1. Install the package
 
 ```shell
-dotnet add package SciChartBlazor
+dotnet add package SciChart.Blazor
 ```
 
 ### 2. Add the namespace import
@@ -83,7 +83,7 @@ dotnet add package SciChartBlazor
 In `_imports.razor`:
 
 ```razor
-@using SciChartBlazor.Components
+@using SciChart.Blazor.Components
 ```
 
 ### 3. Add a chart to your page

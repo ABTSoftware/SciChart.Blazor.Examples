@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using SciChartBlazor.Components;
+using SciChart.Blazor.Components;
 
 namespace WasmDemo.Pages;
 
@@ -62,9 +62,10 @@ public partial class StackedMountainDemo : ComponentBase
 
             Logger?.LogInformation($"Appending 3 data points starting at index {_currentIndex}");
 
-            await _xyDataSeriesSeries1Ref.AppendRange(newXValues, newY1Values);
-            await _xyDataSeriesSeries2Ref!.AppendRange(newXValues, newY2Values);
-            await _xyDataSeriesSeries3Ref!.AppendRange(newXValues, newY3Values);
+            await Task.WhenAll(
+                _xyDataSeriesSeries1Ref.AppendRange(newXValues, newY1Values),
+                _xyDataSeriesSeries2Ref!.AppendRange(newXValues, newY2Values),
+                _xyDataSeriesSeries3Ref!.AppendRange(newXValues, newY3Values));
 
             _currentIndex += 3;
         }
@@ -96,9 +97,10 @@ public partial class StackedMountainDemo : ComponentBase
 
             Logger?.LogInformation($"Appending 3 data points by pointer starting at index {_currentIndex}");
 
-            await _xyDataSeriesSeries1Ref.AppendRangeByPointer(newXValues, newY1Values);
-            await _xyDataSeriesSeries2Ref!.AppendRangeByPointer(newXValues, newY2Values);
-            await _xyDataSeriesSeries3Ref!.AppendRangeByPointer(newXValues, newY3Values);
+            await Task.WhenAll(
+                _xyDataSeriesSeries1Ref.AppendRange(newXValues, newY1Values),
+                _xyDataSeriesSeries2Ref!.AppendRange(newXValues, newY2Values),
+                _xyDataSeriesSeries3Ref!.AppendRange(newXValues, newY3Values));
 
             _currentIndex += 3;
         }

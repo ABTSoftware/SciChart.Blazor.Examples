@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using SciChartBlazor.Components;
+using SciChart.Blazor.Components;
 
 namespace WasmDemo.Pages;
 
@@ -62,9 +62,10 @@ public partial class SmoothStackedMountainDemo : ComponentBase
 
             Logger?.LogInformation($"Appending 3 data points starting at index {_currentIndex}");
 
-            await _xyDataSeriesSmoothSeries1Ref.AppendRange(newXValues, newY1Values);
-            await _xyDataSeriesSmoothSeries2Ref!.AppendRange(newXValues, newY2Values);
-            await _xyDataSeriesSmoothSeries3Ref!.AppendRange(newXValues, newY3Values);
+            await Task.WhenAll(
+                _xyDataSeriesSmoothSeries1Ref.AppendRange(newXValues, newY1Values),
+                _xyDataSeriesSmoothSeries2Ref!.AppendRange(newXValues, newY2Values),
+                _xyDataSeriesSmoothSeries3Ref!.AppendRange(newXValues, newY3Values));
 
             _currentIndex += 3;
         }
@@ -96,9 +97,10 @@ public partial class SmoothStackedMountainDemo : ComponentBase
 
             Logger?.LogInformation($"Appending 3 data points by pointer starting at index {_currentIndex}");
 
-            await _xyDataSeriesSmoothSeries1Ref.AppendRangeByPointer(newXValues, newY1Values);
-            await _xyDataSeriesSmoothSeries2Ref!.AppendRangeByPointer(newXValues, newY2Values);
-            await _xyDataSeriesSmoothSeries3Ref!.AppendRangeByPointer(newXValues, newY3Values);
+            await Task.WhenAll(
+                _xyDataSeriesSmoothSeries1Ref.AppendRange(newXValues, newY1Values),
+                _xyDataSeriesSmoothSeries2Ref!.AppendRange(newXValues, newY2Values),
+                _xyDataSeriesSmoothSeries3Ref!.AppendRange(newXValues, newY3Values));
 
             _currentIndex += 3;
         }

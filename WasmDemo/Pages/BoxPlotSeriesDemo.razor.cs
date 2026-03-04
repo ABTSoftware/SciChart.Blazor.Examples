@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using SciChartBlazor.Components;
+using SciChart.Blazor.Components;
 
 namespace WasmDemo.Pages;
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SciChartBlazor.Components;
+using SciChart.Blazor.Components;
 
 namespace ServerDemo.Pages;
 

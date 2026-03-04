@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
-using SciChartBlazor.Components;
-using SciChartBlazor.Tools;
+using SciChart.Blazor.Components;
+using SciChart.Blazor.Tools;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Timers;
