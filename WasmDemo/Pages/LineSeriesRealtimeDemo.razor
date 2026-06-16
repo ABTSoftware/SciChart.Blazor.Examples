@@ -9,7 +9,7 @@
 <div style="width: 800px;">
     <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3" OnSciChartSurfaceRendered="HandleSurfaceRendered">
         <XAxes>
-            <NumericAxis AutoRange="@_autoRange" />
+            <NumericAxis AutoRange="@_xAutoRange" VisibleRange="@_xVisibleRange" />
         </XAxes>
         <YAxes>
             <NumericAxis AutoRange="@_autoRange" />
@@ -53,6 +53,13 @@
         <button type="button" class="btn btn-secondary ms-2" @onclick="ClearData">
             Clear
         </button>
+    </div>
+
+    <div class="mt-3">
+        <label>
+            <input type="checkbox" id="compressionModeCheckbox" checked="@_isCompressionMode" @onchange="OnCompressionModeChanged" />
+            Compression mode (uncheck for moving window)
+        </label>
     </div>
 
     <div class="mt-3">

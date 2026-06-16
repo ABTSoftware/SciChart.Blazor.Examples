@@ -23,9 +23,17 @@ public partial class LineSeriesRealtimeDemo : ComponentBase, IDisposable
     private long _lastRenderTime = 0;
     private int _numberOfPointsPerTimerTick = 1000; // 1,000 points every timer tick
     private EAutoRange _autoRange = EAutoRange.Always;
+    private bool _isCompressionMode = true;
+    private EAutoRange _xAutoRange = EAutoRange.Always;
     private Queue<double> _fpsValues = new Queue<double>();
     private const int FpsAverageCount = 10;
     private bool _isReadyForNextUpdate = true;
+    private NumberRange? _xVisibleRange = new NumberRange()
+    {
+        Min = 0,
+        Max = 10000
+    };
+    private double _maxX = 0;
 
     protected override void OnInitialized()
     {
@@ -66,14 +74,23 @@ public partial class LineSeriesRealtimeDemo : ComponentBase, IDisposable
         _isReadyForNextUpdate = false;
 
         var data1 = _generator1.GetRandomWalkSeries(_numberOfPointsPerTimerTick);
+        if (data1.xValues.Last() > _maxX) _maxX = data1.xValues.Last();
         var data2 = _generator2.GetRandomWalkSeries(_numberOfPointsPerTimerTick);
+        if (data2.xValues.Last() > _maxX) _maxX = data2.xValues.Last();
         var data3 = _generator3.GetRandomWalkSeries(_numberOfPointsPerTimerTick);
+        if (data3.xValues.Last() > _maxX) _maxX = data3.xValues.Last();
 
         await InvokeAsync(async () =>
         {
             await _xyDataSeriesLine1Ref.AppendRangeByPointer(data1.xValues, data1.yValues);
             await _xyDataSeriesLine2Ref.AppendRangeByPointer(data2.xValues, data2.yValues);
             await _xyDataSeriesLine3Ref.AppendRangeByPointer(data3.xValues, data3.yValues);
+
+            if (!_isCompressionMode)
+            {
+                _xVisibleRange = new NumberRange() { Min = _maxX - 10000, Max = _maxX };
+                _sciChartRef.RequestUpdate();
+            }
         });
     }
 
@@ -131,12 +148,21 @@ public partial class LineSeriesRealtimeDemo : ComponentBase, IDisposable
         }
     }
 
+    private void OnCompressionModeChanged(ChangeEventArgs e)
+    {
+        _isCompressionMode = e.Value is bool isChecked && isChecked;
+        _xAutoRange = _isCompressionMode ? EAutoRange.Always : EAutoRange.Never;
+        _sciChartRef.RequestUpdate();
+    }
+
     private void ClearData()
     {
         StopUpdates();
         _generator1.Reset();
         _generator2.Reset();
         _generator3.Reset();
+        _maxX = 0;
+        _xVisibleRange = new NumberRange() { Min = 0, Max = 10000 };
         _datapoints = "0";
         _fps = "0";
         _fpsStopwatch.Reset();
