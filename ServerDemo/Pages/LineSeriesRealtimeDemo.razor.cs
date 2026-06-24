@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using System.Timers;
 
-namespace WasmDemo.Pages;
+namespace ServerDemo.Pages;
 
 public partial class LineSeriesRealtimeDemo : ComponentBase, IDisposable
 {
@@ -83,9 +83,9 @@ public partial class LineSeriesRealtimeDemo : ComponentBase, IDisposable
 
         await InvokeAsync(async () =>
         {
-            await _xyDataSeriesLine1Ref.AppendRangeByPointer(data1.xValues, data1.yValues);
-            await _xyDataSeriesLine2Ref.AppendRangeByPointer(data2.xValues, data2.yValues);
-            await _xyDataSeriesLine3Ref.AppendRangeByPointer(data3.xValues, data3.yValues);
+            await _xyDataSeriesLine1Ref.AppendRange(data1.xValues, data1.yValues);
+            await _xyDataSeriesLine2Ref.AppendRange(data2.xValues, data2.yValues);
+            await _xyDataSeriesLine3Ref.AppendRange(data3.xValues, data3.yValues);
 
             if (!_isCompressionMode && _zoomState != EZoomState.UserZooming)
             {

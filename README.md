@@ -67,7 +67,7 @@ For running ServerDemo:
 
 SciChart.Blazor is Blazor component library that wraps [SciChart.js](https://www.scichart.com/) — a high-performance WebGL charting library — enabling its use in Blazor Server and Blazor WebAssembly applications.
 
-Current version of nuget package supports only 2D charts, Polar Charts and Pie Charts are not supported at the moment. The package is based on SciChart.js version `5.0.178`.
+Current version of nuget package supports only 2D charts, Polar Charts and Pie Charts are not supported at the moment. The package is based on SciChart.js version `5.2.45`.
 All charts that are in the library support initial creation and data append. However, only FastLineRenderableSeries has been well tested at the moment.
 
 ## Getting Started

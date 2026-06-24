@@ -47,7 +47,8 @@
             </SplineLineRenderableSeries>
             <MouseWheelZoomModifier />
             <ZoomPanModifier />
-            <RolloverModifier TooltipDataTemplate="@tooltipTemplate" IncludedSeriesIds="@(["line1"])" />
+            @* <RolloverModifier TooltipDataTemplate="@tooltipTemplate" IncludedSeriesIds="@(["line1"])" /> *@
+            <CursorModifier ShowTooltip="true" />
         </SciChartSurface>
     </div>
     <div style="margin-left: 20px;">
