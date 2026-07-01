@@ -10,7 +10,7 @@
     <div id="demo" style="width: 600px;">
         <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3">
             <XAxes>
-                <NumericAxis />
+                <NumericAxis VisibleRange="@(new NumberRange { Min = -1, Max = 55 })" />
             </XAxes>
             <YAxes>
                 <NumericAxis />
@@ -22,6 +22,7 @@
                 DataPointWidth="0.8"
                 SeriesName="Stock Price">
                 <OhlcDataSeries
+                    @ref="_ohlcDataSeriesRef"
                     XValues="@xData"
                     OpenValues="@openData"
                     HighValues="@highData"
@@ -31,5 +32,30 @@
             <MouseWheelZoomModifier />
             <ZoomPanModifier />
         </SciChartSurface>
+    </div>
+    <div style="margin-left: 20px;">
+        <button id="btn-append-data" type="button" class="btn btn-secondary mt-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button id="btn-append-data-pointer" type="button" class="btn btn-secondary mt-2" @onclick="AppendDataByPointer">
+            Append Data By Pointer
+        </button>
+        <br />
+        <button id="btn-update-data" type="button" class="btn btn-secondary mt-2" @onclick="UpdateData">
+            Update Data
+        </button>
+        <br />
+        <button id="btn-insert-data" type="button" class="btn btn-secondary mt-2" @onclick="InsertData">
+            Insert Data
+        </button>
+        <br />
+        <button id="btn-insert-data-pointer" type="button" class="btn btn-secondary mt-2" @onclick="InsertDataByPointer">
+            Insert Data By Pointer
+        </button>
+        <br />
+        <button id="btn-remove-data" type="button" class="btn btn-secondary mt-2" @onclick="RemoveData">
+            Remove Data
+        </button>
     </div>
 </div>

@@ -10,6 +10,7 @@ public partial class OhlcSeriesDemo : ComponentBase
     private ILogger<OhlcSeriesDemo> Logger { get; set; } = null!;
 
     private SciChartSurface _sciChartRef;
+    private OhlcDataSeries? _ohlcDataSeriesRef;
 
     private double[] xData;
     private double[] openData;
@@ -48,6 +49,104 @@ public partial class OhlcSeriesDemo : ComponentBase
             closeData[i] = close;
 
             price = close;
+        }
+    }
+
+    private async Task AppendData()
+    {
+        if (_ohlcDataSeriesRef == null) return;
+        try
+        {
+            var newXValues = new double[] { 50, 51 };
+            var newOpenValues = new double[] { 100, 102 };
+            var newHighValues = new double[] { 108, 110 };
+            var newLowValues = new double[] { 95, 97 };
+            var newCloseValues = new double[] { 104, 106 };
+            await _ohlcDataSeriesRef.AppendRange(newXValues, newOpenValues, newHighValues, newLowValues, newCloseValues);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to append data to OHLC series");
+        }
+    }
+
+    private async Task AppendDataByPointer()
+    {
+        if (_ohlcDataSeriesRef == null) return;
+        try
+        {
+            var newXValues = new double[] { 50, 51 };
+            var newOpenValues = new double[] { 100, 102 };
+            var newHighValues = new double[] { 108, 110 };
+            var newLowValues = new double[] { 95, 97 };
+            var newCloseValues = new double[] { 104, 106 };
+            await _ohlcDataSeriesRef.AppendRangeByPointer(newXValues, newOpenValues, newHighValues, newLowValues, newCloseValues);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to append data to OHLC series by pointer");
+        }
+    }
+
+    private async Task UpdateData()
+    {
+        if (_ohlcDataSeriesRef == null) return;
+        try
+        {
+            await _ohlcDataSeriesRef.UpdateXohlc(0, 0, 100, 112, 88, 106);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to update OHLC series");
+        }
+    }
+
+    private async Task InsertData()
+    {
+        if (_ohlcDataSeriesRef == null) return;
+        try
+        {
+            var newXValues = new double[] { 0.3, 0.6 };
+            var newOpenValues = new double[] { 100, 102 };
+            var newHighValues = new double[] { 108, 110 };
+            var newLowValues = new double[] { 95, 97 };
+            var newCloseValues = new double[] { 104, 106 };
+            await _ohlcDataSeriesRef.InsertRange(1, newXValues, newOpenValues, newHighValues, newLowValues, newCloseValues);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into OHLC series");
+        }
+    }
+
+    private async Task InsertDataByPointer()
+    {
+        if (_ohlcDataSeriesRef == null) return;
+        try
+        {
+            var newXValues = new double[] { 0.3, 0.6 };
+            var newOpenValues = new double[] { 100, 102 };
+            var newHighValues = new double[] { 108, 110 };
+            var newLowValues = new double[] { 95, 97 };
+            var newCloseValues = new double[] { 104, 106 };
+            await _ohlcDataSeriesRef.InsertRangeByPointer(1, newXValues, newOpenValues, newHighValues, newLowValues, newCloseValues);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into OHLC series by pointer");
+        }
+    }
+
+    private async Task RemoveData()
+    {
+        if (_ohlcDataSeriesRef == null) return;
+        try
+        {
+            await _ohlcDataSeriesRef.RemoveRange(1, 2);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to remove data from OHLC series");
         }
     }
 }

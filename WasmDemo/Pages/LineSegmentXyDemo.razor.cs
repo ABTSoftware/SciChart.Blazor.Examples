@@ -26,7 +26,6 @@ public partial class LineSegmentXyDemo : ComponentBase
         try
         {
             // Generate 2 new line segments (4 points)
-            var random = new Random();
             var newXValues = new double[4];
             var newYValues = new double[4];
 
@@ -35,9 +34,9 @@ public partial class LineSegmentXyDemo : ComponentBase
                 // Each segment has 2 points
                 int idx = i * 2;
                 newXValues[idx] = _currentIndex + idx;
-                newYValues[idx] = random.Next(1, 6);
+                newYValues[idx] = 3;
                 newXValues[idx + 1] = _currentIndex + idx + 1;
-                newYValues[idx + 1] = random.Next(1, 6);
+                newYValues[idx + 1] = 4;
             }
 
             Logger?.LogInformation($"Appending 2 line segments (4 points) starting at index {_currentIndex}");
@@ -58,7 +57,6 @@ public partial class LineSegmentXyDemo : ComponentBase
         try
         {
             // Generate 2 new line segments (4 points)
-            var random = new Random();
             var newXValues = new double[4];
             var newYValues = new double[4];
 
@@ -67,9 +65,9 @@ public partial class LineSegmentXyDemo : ComponentBase
                 // Each segment has 2 points
                 int idx = i * 2;
                 newXValues[idx] = _currentIndex + idx;
-                newYValues[idx] = random.Next(1, 6);
+                newYValues[idx] = 3;
                 newXValues[idx + 1] = _currentIndex + idx + 1;
-                newYValues[idx + 1] = random.Next(1, 6);
+                newYValues[idx + 1] = 4;
             }
 
             Logger?.LogInformation($"Appending 2 line segments (4 points) by pointer starting at index {_currentIndex}");

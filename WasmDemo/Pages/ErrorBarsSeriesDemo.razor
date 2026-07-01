@@ -36,12 +36,28 @@
         </SciChartSurface>
     </div>
     <div>
-        <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendData">
+        <button id="btn-append-data" type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendData">
             Append Data
         </button>
         <br />
         <button type="button" class="btn btn-secondary mt-2 ms-2" @onclick="AppendDataByPointer">
             Append Data By Pointer
+        </button>
+        <br />
+        <button id="btn-update-data" type="button" class="btn btn-secondary mt-2 ms-2" @onclick="UpdateData">
+            Update Data
+        </button>
+        <br />
+        <button id="btn-insert-data" type="button" class="btn btn-secondary mt-2 ms-2" @onclick="InsertData">
+            Insert Data
+        </button>
+        <br />
+        <button id="btn-insert-data-pointer" type="button" class="btn btn-secondary mt-2 ms-2" @onclick="InsertDataByPointer">
+            Insert Data By Pointer
+        </button>
+        <br />
+        <button id="btn-remove-data" type="button" class="btn btn-secondary mt-2 ms-2" @onclick="RemoveData">
+            Remove Data
         </button>
     </div>
 </div>

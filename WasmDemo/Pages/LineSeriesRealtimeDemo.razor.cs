@@ -156,7 +156,6 @@ public partial class LineSeriesRealtimeDemo : ComponentBase, IDisposable
         _xAutoRange = _isCompressionMode ? EAutoRange.Always : EAutoRange.Never;
         _sciChartRef.RequestUpdate();
     }
-
     private void ClearData()
     {
         StopUpdates();

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using SciChart.Blazor.Components;
 
 namespace WasmDemo.Pages;
@@ -37,10 +38,10 @@ public partial class BandSeriesDemo : ComponentBase
         for (int i = 0; i < dataCount; i++)
         {
             xData[i] = i;
-            yData[i] = Math.Sin(i) * 5 + 10;      // Lower band
-            y1Data[i] = Math.Sin(i) * 5 + 20;     // Upper band
-            yData2[i] = Math.Cos(i * 0.75) * 4 + 12;    // Second lower band
-            y1Data2[i] = Math.Cos(i * 0.75) * 4 + 22;   // Second upper band
+            yData[i] = 18 + i * 1.2 + Math.Sin(i) * 3;       // Regular band Y — rising wave, crosses above Y1 after index 5
+            y1Data[i] = 30 - i * 1.2 + Math.Sin(i) * 3;      // Regular band Y1 — falling wave (Y < Y1 at 0, Y > Y1 by index 5)
+            yData2[i] = 2 + i * 1.2 + Math.Sin(i * 0.9) * 3;    // Spline band Y — rising wave, crosses above Y1 after index 5
+            y1Data2[i] = 14 - i * 1.2 + Math.Sin(i * 0.9) * 3;  // Spline band Y1 — falling wave
 
             // Create metadata for each point
             metadata[i] = new PointMetadata
@@ -73,10 +74,10 @@ public partial class BandSeriesDemo : ComponentBase
             {
                 int index = _currentIndex + i;
                 newXValues[i] = index;
-                newYValues[i] = Math.Sin(index) * 5 + 10;
-                newY1Values[i] = Math.Sin(index) * 5 + 20;
-                newY2Values[i] = Math.Cos(index * 0.75) * 4 + 12;
-                newY1_2Values[i] = Math.Cos(index * 0.75) * 4 + 22;
+                newYValues[i] = 18 + index * 1.2 + Math.Sin(index) * 3;
+                newY1Values[i] = 30 - index * 1.2 + Math.Sin(index) * 3;
+                newY2Values[i] = 2 + index * 1.2 + Math.Sin(index * 0.9) * 3;
+                newY1_2Values[i] = 14 - index * 1.2 + Math.Sin(index * 0.9) * 3;
             }
 
             Logger?.LogInformation($"Appending 5 data points starting at index {_currentIndex}");
@@ -89,6 +90,74 @@ public partial class BandSeriesDemo : ComponentBase
         catch (Exception ex)
         {
             Logger?.LogError(ex, "Failed to append data to band series");
+        }
+    }
+
+    private async Task UpdateData()
+    {
+        if (_xyyDataSeriesBand1Ref == null) return;
+        try
+        {
+            await _xyyDataSeriesBand1Ref.UpdateXyy1(0, 0, 15, 25);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to update band series");
+        }
+    }
+
+    private async Task InsertData()
+    {
+        if (_xyyDataSeriesBand1Ref == null) return;
+        try
+        {
+            var newXValues = new double[] { 0.3, 0.6 };
+            var newYValues = new double[] { 12, 14 };
+            var newY1Values = new double[] { 22, 24 };
+            var newMetadata = new PointMetadata[]
+            {
+                new() { CustomText = "Inserted A" },
+                new() { CustomText = "Inserted B" }
+            };
+            await _xyyDataSeriesBand1Ref.InsertRange(1, newXValues, newYValues, newY1Values, newMetadata);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into band series");
+        }
+    }
+
+    private async Task InsertDataByPointer()
+    {
+        if (_xyyDataSeriesBand1Ref == null) return;
+        try
+        {
+            var newXValues = new double[] { 0.3, 0.6 };
+            var newYValues = new double[] { 12, 14 };
+            var newY1Values = new double[] { 22, 24 };
+            var newMetadata = new PointMetadata[]
+            {
+                new() { CustomText = "Inserted A" },
+                new() { CustomText = "Inserted B" }
+            };
+            await _xyyDataSeriesBand1Ref.InsertRangeByPointer(1, newXValues, newYValues, newY1Values, newMetadata);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into band series by pointer");
+        }
+    }
+
+    private async Task RemoveData()
+    {
+        if (_xyyDataSeriesBand1Ref == null) return;
+        try
+        {
+            await _xyyDataSeriesBand1Ref.RemoveRange(1, 2);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to remove data from band series");
         }
     }
 
@@ -113,10 +182,10 @@ public partial class BandSeriesDemo : ComponentBase
             {
                 int index = _currentIndex + i;
                 newXValues[i] = index;
-                newYValues[i] = Math.Sin(index) * 5 + 10;
-                newY1Values[i] = Math.Sin(index) * 5 + 20;
-                newY2Values[i] = Math.Cos(index * 0.75) * 4 + 12;
-                newY1_2Values[i] = Math.Cos(index * 0.75) * 4 + 22;
+                newYValues[i] = 18 + index * 1.2 + Math.Sin(index) * 3;
+                newY1Values[i] = 30 - index * 1.2 + Math.Sin(index) * 3;
+                newY2Values[i] = 2 + index * 1.2 + Math.Sin(index * 0.9) * 3;
+                newY1_2Values[i] = 14 - index * 1.2 + Math.Sin(index * 0.9) * 3;
             }
 
             Logger?.LogInformation($"Appending 5 data points by pointer starting at index {_currentIndex}");

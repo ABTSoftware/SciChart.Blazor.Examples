@@ -1,5 +1,7 @@
 # SciChart.Blazor.Examples
 
+See the [Change Log](ChangeLog.md) for the latest updates.
+
 ![SciChart Blazor Wasm Demo image](docs/scichart_blazor_wasm_demo.png)
 
 ## How to run the demo

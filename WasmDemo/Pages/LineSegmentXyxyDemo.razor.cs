@@ -31,7 +31,6 @@ public partial class LineSegmentXyxyDemo : ComponentBase
         try
         {
             // Generate 2 new line segments
-            var random = new Random();
             var newXValues = new double[2];
             var newYValues = new double[2];
             var newX1Values = new double[2];
@@ -41,9 +40,9 @@ public partial class LineSegmentXyxyDemo : ComponentBase
             {
                 int baseX = _currentSegmentCount * 2 + i * 2;
                 newXValues[i] = baseX;
-                newYValues[i] = random.Next(1, 6);
+                newYValues[i] = 3;
                 newX1Values[i] = baseX + 1;
-                newY1Values[i] = random.Next(1, 6);
+                newY1Values[i] = 4;
             }
 
             Logger?.LogInformation($"Appending 2 line segments starting at segment {_currentSegmentCount}");
@@ -54,6 +53,66 @@ public partial class LineSegmentXyxyDemo : ComponentBase
         catch (Exception ex)
         {
             Logger?.LogError(ex, "Failed to append data to line segment series");
+        }
+    }
+
+    private async Task UpdateData()
+    {
+        if (_xyxyDataSeriesLinesegment1Ref == null) return;
+        try
+        {
+            await _xyxyDataSeriesLinesegment1Ref.UpdateXyz(0, 0, 3, 1, 4);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to update line segment series");
+        }
+    }
+
+    private async Task InsertData()
+    {
+        if (_xyxyDataSeriesLinesegment1Ref == null) return;
+        try
+        {
+            var newXValues = new double[] { 1.3, 1.6 };
+            var newYValues = new double[] { 2, 3 };
+            var newX1Values = new double[] { 1.4, 1.7 };
+            var newY1Values = new double[] { 4, 5 };
+            await _xyxyDataSeriesLinesegment1Ref.InsertRange(1, newXValues, newYValues, newX1Values, newY1Values);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into line segment series");
+        }
+    }
+
+    private async Task InsertDataByPointer()
+    {
+        if (_xyxyDataSeriesLinesegment1Ref == null) return;
+        try
+        {
+            var newXValues = new double[] { 1.3, 1.6 };
+            var newYValues = new double[] { 2, 3 };
+            var newX1Values = new double[] { 1.4, 1.7 };
+            var newY1Values = new double[] { 4, 5 };
+            await _xyxyDataSeriesLinesegment1Ref.InsertRangeByPointer(1, newXValues, newYValues, newX1Values, newY1Values);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into line segment series by pointer");
+        }
+    }
+
+    private async Task RemoveData()
+    {
+        if (_xyxyDataSeriesLinesegment1Ref == null) return;
+        try
+        {
+            await _xyxyDataSeriesLinesegment1Ref.RemoveRange(1, 2);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to remove data from line segment series");
         }
     }
 
@@ -68,7 +127,6 @@ public partial class LineSegmentXyxyDemo : ComponentBase
         try
         {
             // Generate 2 new line segments
-            var random = new Random();
             var newXValues = new double[2];
             var newYValues = new double[2];
             var newX1Values = new double[2];
@@ -78,9 +136,9 @@ public partial class LineSegmentXyxyDemo : ComponentBase
             {
                 int baseX = _currentSegmentCount * 2 + i * 2;
                 newXValues[i] = baseX;
-                newYValues[i] = random.Next(1, 6);
+                newYValues[i] = 3;
                 newX1Values[i] = baseX + 1;
-                newY1Values[i] = random.Next(1, 6);
+                newY1Values[i] = 4;
             }
 
             Logger?.LogInformation($"Appending 2 line segments by pointer starting at segment {_currentSegmentCount}");

@@ -61,6 +61,70 @@ public partial class BoxPlotSeriesDemo : ComponentBase
         }
     }
 
+    private async Task UpdateData()
+    {
+        if (_boxPlotDataSeriesBoxplot1Ref == null) return;
+        try
+        {
+            await _boxPlotDataSeriesBoxplot1Ref.UpdateXBoxPlot(0, 0, 98, 82, 66, 52, 32);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to update box plot series");
+        }
+    }
+
+    private async Task InsertData()
+    {
+        if (_boxPlotDataSeriesBoxplot1Ref == null) return;
+        try
+        {
+            var newXValues = new double[] { 0.3, 0.6 };
+            var newMaxValues = new double[] { 90, 92 };
+            var newUpperQValues = new double[] { 78, 80 };
+            var newMedianValues = new double[] { 63, 65 };
+            var newLowerQValues = new double[] { 48, 50 };
+            var newMinValues = new double[] { 28, 30 };
+            await _boxPlotDataSeriesBoxplot1Ref.InsertRange(1, newXValues, newMaxValues, newUpperQValues, newMedianValues, newLowerQValues, newMinValues);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into box plot series");
+        }
+    }
+
+    private async Task InsertDataByPointer()
+    {
+        if (_boxPlotDataSeriesBoxplot1Ref == null) return;
+        try
+        {
+            var newXValues = new double[] { 0.3, 0.6 };
+            var newMaxValues = new double[] { 90, 92 };
+            var newUpperQValues = new double[] { 78, 80 };
+            var newMedianValues = new double[] { 63, 65 };
+            var newLowerQValues = new double[] { 48, 50 };
+            var newMinValues = new double[] { 28, 30 };
+            await _boxPlotDataSeriesBoxplot1Ref.InsertRangeByPointer(1, newXValues, newMaxValues, newUpperQValues, newMedianValues, newLowerQValues, newMinValues);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into box plot series by pointer");
+        }
+    }
+
+    private async Task RemoveData()
+    {
+        if (_boxPlotDataSeriesBoxplot1Ref == null) return;
+        try
+        {
+            await _boxPlotDataSeriesBoxplot1Ref.RemoveRange(1, 2);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to remove data from box plot series");
+        }
+    }
+
     private async Task AppendDataByPointer()
     {
         if (_boxPlotDataSeriesBoxplot1Ref == null)

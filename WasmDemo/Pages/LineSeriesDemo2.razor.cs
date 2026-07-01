@@ -83,8 +83,8 @@ public partial class LineSeriesDemo2 : ComponentBase
 
     private void HandleSurfaceRendered(SciChartSurfaceDefinition chartState)
     {
-        var json = JsonSerializer.Serialize(chartState);
-        Console.WriteLine(json);
+        //var json = JsonSerializer.Serialize(chartState);
+        //Console.WriteLine(json);
     }
 
     private class SeriesData

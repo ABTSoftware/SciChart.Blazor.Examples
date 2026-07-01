@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using SciChart.Blazor.Components;
 
 namespace ServerDemo.Pages;

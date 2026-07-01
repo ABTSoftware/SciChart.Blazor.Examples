@@ -53,6 +53,66 @@ public partial class ErrorBarsSeriesDemo : ComponentBase
         }
     }
 
+    private async Task UpdateData()
+    {
+        if (_hlcDataSeriesErrorbars1Ref == null) return;
+        try
+        {
+            await _hlcDataSeriesErrorbars1Ref.UpdateXyhl(0, 0, 60, 66, 54);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to update error bars series");
+        }
+    }
+
+    private async Task InsertData()
+    {
+        if (_hlcDataSeriesErrorbars1Ref == null) return;
+        try
+        {
+            var newXValues = new double[] { 0.3, 0.6 };
+            var newYValues = new double[] { 53, 56 };
+            var newHighValues = new double[] { 59, 62 };
+            var newLowValues = new double[] { 47, 50 };
+            await _hlcDataSeriesErrorbars1Ref.InsertRange(1, newXValues, newYValues, newHighValues, newLowValues);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into error bars series");
+        }
+    }
+
+    private async Task InsertDataByPointer()
+    {
+        if (_hlcDataSeriesErrorbars1Ref == null) return;
+        try
+        {
+            var newXValues = new double[] { 0.3, 0.6 };
+            var newYValues = new double[] { 53, 56 };
+            var newHighValues = new double[] { 59, 62 };
+            var newLowValues = new double[] { 47, 50 };
+            await _hlcDataSeriesErrorbars1Ref.InsertRangeByPointer(1, newXValues, newYValues, newHighValues, newLowValues);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into error bars series by pointer");
+        }
+    }
+
+    private async Task RemoveData()
+    {
+        if (_hlcDataSeriesErrorbars1Ref == null) return;
+        try
+        {
+            await _hlcDataSeriesErrorbars1Ref.RemoveRange(1, 2);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to remove data from error bars series");
+        }
+    }
+
     private async Task AppendDataByPointer()
     {
         if (_hlcDataSeriesErrorbars1Ref == null)

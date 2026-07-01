@@ -1,0 +1,52 @@
+@page "/ohlc-series-demo"
+
+<PageTitle>OHLC Series Chart</PageTitle>
+<h1>OHLC Series Chart</h1>
+
+<p>This page demonstrates OHLC series in SciChart.</p>
+
+<div style="display: flex">
+    <div id="demo" style="width: 600px;">
+        <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3">
+            <XAxes>
+                <NumericAxis VisibleRange="@(new NumberRange { Min = -1, Max = 55 })" />
+            </XAxes>
+            <YAxes>
+                <NumericAxis />
+            </YAxes>
+            <FastOhlcRenderableSeries
+                StrokeUp="#4CAF50"
+                StrokeDown="#F44336"
+                StrokeThickness="2"
+                DataPointWidth="0.8"
+                SeriesName="Stock Price">
+                <OhlcDataSeries
+                    @ref="_ohlcDataSeriesRef"
+                    XValues="@xData"
+                    OpenValues="@openData"
+                    HighValues="@highData"
+                    LowValues="@lowData"
+                    CloseValues="@closeData" />
+            </FastOhlcRenderableSeries>
+            <MouseWheelZoomModifier />
+            <ZoomPanModifier />
+        </SciChartSurface>
+    </div>
+    <div style="margin-left: 20px;">
+        <button id="btn-append-data" type="button" class="btn btn-secondary mt-2" @onclick="AppendData">
+            Append Data
+        </button>
+        <br />
+        <button id="btn-update-data" type="button" class="btn btn-secondary mt-2" @onclick="UpdateData">
+            Update Data
+        </button>
+        <br />
+        <button id="btn-insert-data" type="button" class="btn btn-secondary mt-2" @onclick="InsertData">
+            Insert Data
+        </button>
+        <br />
+        <button id="btn-remove-data" type="button" class="btn btn-secondary mt-2" @onclick="RemoveData">
+            Remove Data
+        </button>
+    </div>
+</div>

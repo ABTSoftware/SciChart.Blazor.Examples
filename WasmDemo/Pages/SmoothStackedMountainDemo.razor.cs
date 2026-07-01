@@ -25,12 +25,12 @@ public partial class SmoothStackedMountainDemo : ComponentBase
 
     protected override void OnInitialized()
     {
-        Logger.LogInformation("SmoothStackedMountainChart initialized");
+        //Logger.LogInformation("SmoothStackedMountainChart initialized");
     }
 
     private void OnStackingModeChanged()
     {
-        Logger?.LogInformation($"Stacking mode changed to: {(_isOneHundredPercent ? "100%" : "Standard")}");
+        //Logger?.LogInformation($"Stacking mode changed to: {(_isOneHundredPercent ? "100%" : "Standard")}");
 
         // Mark the chart as needing update to recreate with new stacking mode
         if (_sciChartRef != null)
@@ -60,7 +60,7 @@ public partial class SmoothStackedMountainDemo : ComponentBase
                 newY3Values[i] = Math.Cos(index * 0.4) * 3 + 3;
             }
 
-            Logger?.LogInformation($"Appending 3 data points starting at index {_currentIndex}");
+            //Logger?.LogInformation($"Appending 3 data points starting at index {_currentIndex}");
 
             await Task.WhenAll(
                 _xyDataSeriesSmoothSeries1Ref.AppendRange(newXValues, newY1Values),
@@ -71,7 +71,7 @@ public partial class SmoothStackedMountainDemo : ComponentBase
         }
         catch (Exception ex)
         {
-            Logger?.LogError(ex, "Failed to append data to smooth stacked mountain series");
+            //Logger?.LogError(ex, "Failed to append data to smooth stacked mountain series");
         }
     }
 
@@ -95,18 +95,17 @@ public partial class SmoothStackedMountainDemo : ComponentBase
                 newY3Values[i] = Math.Cos(index * 0.4) * 3 + 3;
             }
 
-            Logger?.LogInformation($"Appending 3 data points by pointer starting at index {_currentIndex}");
+            //Logger?.LogInformation($"Appending 3 data points by pointer starting at index {_currentIndex}");
 
-            await Task.WhenAll(
-                _xyDataSeriesSmoothSeries1Ref.AppendRange(newXValues, newY1Values),
-                _xyDataSeriesSmoothSeries2Ref!.AppendRange(newXValues, newY2Values),
-                _xyDataSeriesSmoothSeries3Ref!.AppendRange(newXValues, newY3Values));
+            await _xyDataSeriesSmoothSeries1Ref.AppendRangeByPointer(newXValues, newY1Values);
+            await _xyDataSeriesSmoothSeries2Ref!.AppendRangeByPointer(newXValues, newY2Values);
+            await _xyDataSeriesSmoothSeries3Ref!.AppendRangeByPointer(newXValues, newY3Values);
 
             _currentIndex += 3;
         }
         catch (Exception ex)
         {
-            Logger?.LogError(ex, "Failed to append data to smooth stacked mountain series by pointer");
+            //Logger?.LogError(ex, "Failed to append data to smooth stacked mountain series by pointer");
         }
     }
 }

@@ -20,11 +20,29 @@ public partial class TextSeriesDemo : ComponentBase
         if (_xyTextDataSeriesText1Ref == null) return;
 
         _currentIndex++;
-        double newX = _currentIndex;
-        double newY = 2 + Random.Shared.NextDouble() * 4;
+        double newX = 4;
+        double newY = 4;
         string newText = _labels[_labelIndex % _labels.Length];
         _labelIndex++;
 
         await _xyTextDataSeriesText1Ref.AppendRange([newX], [newY], [newText]);
+    }
+
+    private async Task UpdateData()
+    {
+        if (_xyTextDataSeriesText1Ref == null) return;
+        await _xyTextDataSeriesText1Ref.UpdateXyText(0, 1, 4, "Z");
+    }
+
+    private async Task InsertData()
+    {
+        if (_xyTextDataSeriesText1Ref == null) return;
+        await _xyTextDataSeriesText1Ref.InsertRange(0, [0.3, 0.6], [3, 4], ["X", "Y"]);
+    }
+
+    private async Task RemoveData()
+    {
+        if (_xyTextDataSeriesText1Ref == null) return;
+        await _xyTextDataSeriesText1Ref.RemoveRange(0, 2);
     }
 }

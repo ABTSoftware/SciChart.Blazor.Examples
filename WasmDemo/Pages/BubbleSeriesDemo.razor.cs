@@ -63,6 +63,74 @@ public partial class BubbleSeriesDemo : ComponentBase
         }
     }
 
+    private async Task UpdateData()
+    {
+        if (_xyzDataSeriesBubble1Ref == null) return;
+        try
+        {
+            await _xyzDataSeriesBubble1Ref.UpdateXyz(0, 1, 5, 30);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to update bubble series");
+        }
+    }
+
+    private async Task InsertData()
+    {
+        if (_xyzDataSeriesBubble1Ref == null) return;
+        try
+        {
+            var newXValues = new double[] { 0.3, 0.6 };
+            var newYValues = new double[] { 3, 4 };
+            var newZValues = new double[] { 20, 25 };
+            var newMetadata = new PointMetadata[]
+            {
+                new() { CustomText = "A", CustomValue = 0.3 },
+                new() { CustomText = "B", CustomValue = 0.6 }
+            };
+            await _xyzDataSeriesBubble1Ref.InsertRange(0, newXValues, newYValues, newZValues, newMetadata);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into bubble series");
+        }
+    }
+
+    private async Task InsertDataByPointer()
+    {
+        if (_xyzDataSeriesBubble1Ref == null) return;
+        try
+        {
+            var newXValues = new double[] { 0.3, 0.6 };
+            var newYValues = new double[] { 3, 4 };
+            var newZValues = new double[] { 20, 25 };
+            var newMetadata = new PointMetadata[]
+            {
+                new() { CustomText = "A", CustomValue = 0.3 },
+                new() { CustomText = "B", CustomValue = 0.6 }
+            };
+            await _xyzDataSeriesBubble1Ref.InsertRangeByPointer(0, newXValues, newYValues, newZValues, newMetadata);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into bubble series by pointer");
+        }
+    }
+
+    private async Task RemoveData()
+    {
+        if (_xyzDataSeriesBubble1Ref == null) return;
+        try
+        {
+            await _xyzDataSeriesBubble1Ref.RemoveRange(0, 2);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to remove data from bubble series");
+        }
+    }
+
     private async Task AppendDataByPointer()
     {
         if (_xyzDataSeriesBubble1Ref == null)

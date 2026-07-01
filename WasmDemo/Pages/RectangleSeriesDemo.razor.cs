@@ -46,7 +46,6 @@ public partial class RectangleSeriesDemo : ComponentBase
         try
         {
             // Generate 2 new rectangles
-            var random = new Random();
             var newXValues = new double[2];
             var newYValues = new double[2];
             var newX1Values = new double[2];
@@ -57,7 +56,7 @@ public partial class RectangleSeriesDemo : ComponentBase
             {
                 int rectIndex = _currentRectangleCount + i;
                 newXValues[i] = rectIndex + 1;
-                newYValues[i] = 5 + random.Next(0, 6); // Random height between 5 and 10
+                newYValues[i] = 5 + 1;
                 newX1Values[i] = rectIndex + 1.8;     // Width of 0.8
                 newY1Values[i] = 0;                    // Baseline at 0
                 newMetadata[i] = new PointMetadata
@@ -89,7 +88,6 @@ public partial class RectangleSeriesDemo : ComponentBase
         try
         {
             // Generate 2 new rectangles
-            var random = new Random();
             var newXValues = new double[2];
             var newYValues = new double[2];
             var newX1Values = new double[2];
@@ -100,7 +98,7 @@ public partial class RectangleSeriesDemo : ComponentBase
             {
                 int rectIndex = _currentRectangleCount + i;
                 newXValues[i] = rectIndex + 1;
-                newYValues[i] = 5 + random.Next(0, 6); // Random height between 5 and 10
+                newYValues[i] = 5 + 2;
                 newX1Values[i] = rectIndex + 1.8;     // Width of 0.8
                 newY1Values[i] = 0;                    // Baseline at 0
                 newMetadata[i] = new PointMetadata

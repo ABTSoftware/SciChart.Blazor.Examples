@@ -1,4 +1,4 @@
-﻿@page "/axis-demo"
+@page "/axis-demo"
 
 <PageTitle>Axis Demo</PageTitle>
 <h1>Axis Demo</h1>
@@ -131,34 +131,37 @@
     <div style="width: 700px;">
         <SciChartSurface @ref="_sciChartRef" DivElementId="axisChart1" HeightAspect="2" WidthAspect="3" OnSciChartSurfaceRendered="OnChart1Rendered">
             <XAxes>
-                <NumericAxis Id="xAxis"
-                             AxisTitle="@_xAxisTitle"
-                             VisibleRange="@_xVisibleRange"
-                             GrowBy="@_growBy"
-                             AutoRange="@_autoRange"
-                             IsVisible="@_isVisible"
-                             DrawMajorGridLines="@_drawMajorGridLines"
-                             DrawMinorGridLines="@_drawMinorGridLines"
-                             DrawMajorBands="@_drawMajorBands"
-                             AxisBandsFill="@_axisBandsFill"
-                             FlippedCoordinates="@_flippedCoordinates"
-                             MaxAutoTicks="@_maxAutoTicks"
-                             MinorsPerMajor="@_minorsPerMajor"
-                             AutoTicks="@_autoTicks" />
+                <NumericAxis
+                    Id="xAxis"
+                    AxisTitle="@_xAxisTitle"
+                    VisibleRange="@_xVisibleRange"
+                    GrowBy="@_growBy"
+                    AutoRange="@_autoRange"
+                    IsVisible="@_isVisible"
+                    DrawMajorGridLines="@_drawMajorGridLines"
+                    DrawMinorGridLines="@_drawMinorGridLines"
+                    DrawMajorBands="@_drawMajorBands"
+                    AxisBandsFill="@_axisBandsFill"
+                    FlippedCoordinates="@_flippedCoordinates"
+                    MaxAutoTicks="@_maxAutoTicks"
+                    MinorsPerMajor="@_minorsPerMajor"
+                    AutoTicks="@_autoTicks" />
             </XAxes>
             <YAxes>
-                <NumericAxis Id="yAxis"
-                             AxisTitle="@_yAxisTitle"
-                             VisibleRange="@_yVisibleRange"
-                             DrawMajorGridLines="@_drawMajorGridLines"
-                             DrawMinorGridLines="@_drawMinorGridLines"
-                             DrawMajorBands="@_drawMajorBands"
-                             AxisBandsFill="@_axisBandsFill" />
+                <NumericAxis
+                    Id="yAxis"
+                    AxisTitle="@_yAxisTitle"
+                    VisibleRange="@_yVisibleRange"
+                    DrawMajorGridLines="@_drawMajorGridLines"
+                    DrawMinorGridLines="@_drawMinorGridLines"
+                    DrawMajorBands="@_drawMajorBands"
+                    AxisBandsFill="@_axisBandsFill" />
             </YAxes>
-            <FastLineRenderableSeries Id="lineSeries"
-                                      Stroke="#50C7E0"
-                                      StrokeThickness="2"
-                                      SeriesName="Sine Wave">
+            <FastLineRenderableSeries
+                Id="lineSeries"
+                Stroke="#50C7E0"
+                StrokeThickness="2"
+                SeriesName="Sine Wave">
                 <XyDataSeries XValues="@xData" YValues="@yData" />
             </FastLineRenderableSeries>
             <MouseWheelZoomModifier />
@@ -320,22 +323,25 @@
     <div style="width: 700px;">
         <SciChartSurface @ref="_sciChartRef2" DivElementId="axisChart2" HeightAspect="2" WidthAspect="3" OnSciChartSurfaceRendered="OnChart2Rendered">
             <XAxes>
-                <CategoryAxis Id="categoryXAxis"
-                              AxisTitle="@_categoryAxisTitle"
-                              Labels="@_categoryLabels"
-                              VisibleRange="@_categoryVisibleRange"
-                              DrawMajorGridLines="@_categoryDrawMajorGridLines"
-                              DrawMajorBands="@_categoryDrawMajorBands"
-                              AxisBandsFill="@_categoryAxisBandsFill" />
+                <CategoryAxis
+                    Id="categoryXAxis"
+                    AxisTitle="@_categoryAxisTitle"
+                    Labels="@_categoryLabels"
+                    VisibleRange="@_categoryVisibleRange"
+                    DrawMajorGridLines="@_categoryDrawMajorGridLines"
+                    DrawMajorBands="@_categoryDrawMajorBands"
+                    AxisBandsFill="@_categoryAxisBandsFill" />
             </XAxes>
             <YAxes>
-                <NumericAxis Id="categoryYAxis"
-                             AxisTitle="Sales"
-                             AutoRange="@EAutoRange.Always" />
+                <NumericAxis
+                    Id="categoryYAxis"
+                    AxisTitle="Sales"
+                    AutoRange="@EAutoRange.Always" />
             </YAxes>
-            <FastColumnRenderableSeries Id="columnSeries"
-                                        Fill="#50C7E0"
-                                        SeriesName="Monthly Sales">
+            <FastColumnRenderableSeries
+                Id="columnSeries"
+                Fill="#50C7E0"
+                SeriesName="Monthly Sales">
                 <XyDataSeries XValues="@categoryXData" YValues="@categoryYData" />
             </FastColumnRenderableSeries>
             <MouseWheelZoomModifier />

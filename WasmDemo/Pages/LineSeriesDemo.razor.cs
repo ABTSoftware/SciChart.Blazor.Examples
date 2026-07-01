@@ -105,6 +105,72 @@ public partial class LineSeriesDemo : ComponentBase
         }
     }
 
+    private async Task UpdateData()
+    {
+        if (_xyDataSeriesLine1Ref == null) return;
+        try
+        {
+            await _xyDataSeriesLine1Ref.UpdateXy(0, 0, 10);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to update line series");
+        }
+    }
+
+    private async Task InsertData()
+    {
+        if (_xyDataSeriesLine1Ref == null) return;
+        try
+        {
+            var xValues = new double[] { 0.3, 0.6 };
+            var yValues = new double[] { 8, -8 };
+            var newMetadata = new PointMetadata[]
+            {
+                new() { CustomText = "Inserted A" },
+                new() { CustomText = "Inserted B" }
+            };
+            await _xyDataSeriesLine1Ref.InsertRange(1, xValues, yValues, newMetadata);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into line series");
+        }
+    }
+
+    private async Task InsertDataByPointer()
+    {
+        if (_xyDataSeriesLine1Ref == null) return;
+        try
+        {
+            var xValues = new double[] { 0.3, 0.6 };
+            var yValues = new double[] { 8, -8 };
+            var newMetadata = new PointMetadata[]
+            {
+                new() { CustomText = "Inserted A" },
+                new() { CustomText = "Inserted B" }
+            };
+            await _xyDataSeriesLine1Ref.InsertRangeByPointer(1, xValues, yValues, newMetadata);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to insert data into line series by pointer");
+        }
+    }
+
+    private async Task RemoveData()
+    {
+        if (_xyDataSeriesLine1Ref == null) return;
+        try
+        {
+            await _xyDataSeriesLine1Ref.RemoveRange(1, 2);
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError(ex, "Failed to remove data from line series");
+        }
+    }
+
     private (double[] xValues, double[] yValues, double[] y2Values, double[] y3Values, PointMetadata[] metadata) GenerateNextDataPoints()
     {
         var xValues = new double[5];
