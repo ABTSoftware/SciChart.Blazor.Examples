@@ -26,6 +26,7 @@
                     Style="@(new TDataLabelStyle { FontSize = 11 })"
                     Color="white" />
                 <NonUniformHeatmapDataSeries
+                    @ref="_dataSeriesRef"
                     XCellOffsets="@xCellOffsets"
                     YCellOffsets="@yCellOffsets"
                     ZValues="@zValues" />
@@ -35,13 +36,20 @@
         </SciChartSurface>
     </div>
     <div style="margin-left: 20px;">
+        <button id="updateAllButton" type="button" class="btn btn-secondary mt-2" @onclick="UpdateAll">
+            Update all
+        </button>
+        <br />
+        <button id="updateOneButton" type="button" class="btn btn-secondary mt-2" @onclick="UpdateOne">
+            Update one
+        </button>
         <div class="mt-3">
             <h5>Description:</h5>
             <ul style="font-size: 0.9em;">
                 <li>Non-uniform heatmap with irregular grid spacing</li>
                 <li>Data labels display Z values (temperature)</li>
                 <li>NumericFormat set to Decimal with Precision 0</li>
-                <li>Cells get progressively wider and taller</li>
+                <li>Columns get wider left-to-right; rows get shorter (first rows tallest)</li>
                 <li>Linear texture filtering for smooth color interpolation</li>
                 <li>Color gradient: Blue (cold) → Green (medium) → Red (hot)</li>
             </ul>

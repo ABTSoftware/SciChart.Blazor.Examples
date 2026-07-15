@@ -7,6 +7,7 @@ namespace ServerDemo.Pages;
 public partial class NonUniformHeatmapSeriesDemo : ComponentBase
 {
     private SciChartSurface? _sciChartRef;
+    private NonUniformHeatmapDataSeries? _dataSeriesRef;
 
     // Sample heatmap data - 10x10 grid with values from 0 to 100
     private double[][] zValues = new double[][]
@@ -26,8 +27,8 @@ public partial class NonUniformHeatmapSeriesDemo : ComponentBase
     // Non-uniform X cell offsets - cells get progressively wider
     private double[] xCellOffsets = new double[] { 0, 1, 2.5, 4.5, 7, 10, 14, 19, 25, 32, 40 };
 
-    // Non-uniform Y cell offsets - cells get progressively taller
-    private double[] yCellOffsets = new double[] { 0, 1, 2.5, 4.5, 7, 10, 14, 19, 25, 32, 40 };
+    // Non-uniform Y cell offsets - rows get progressively shorter (first rows tallest)
+    private double[] yCellOffsets = new double[] { 0, 8, 15, 21, 26, 30, 33, 35.5, 37.5, 39, 40 };
 
     // Color map for the heatmap - blue to red gradient
     private HeatmapColorMap colorMap = new HeatmapColorMap
@@ -44,4 +45,26 @@ public partial class NonUniformHeatmapSeriesDemo : ComponentBase
 
     [Inject]
     private ILogger<NonUniformHeatmapSeriesDemo>? Logger { get; set; }
+
+    private async Task UpdateAll()
+    {
+        if (_dataSeriesRef is null) return;
+        var newZValues = new double[10][];
+        for (int y = 0; y < 10; y++)
+        {
+            newZValues[y] = new double[10];
+            for (int x = 0; x < 10; x++)
+            {
+                var v = (Math.Sin(x * 0.6) + Math.Cos(y * 0.6)) * 25 + 50;
+                newZValues[y][x] = Math.Round(v);
+            }
+        }
+        await _dataSeriesRef.SetZValues(newZValues);
+    }
+
+    private async Task UpdateOne()
+    {
+        if (_dataSeriesRef is null) return;
+        await _dataSeriesRef.SetZValue(0, 0, 99);
+    }
 }

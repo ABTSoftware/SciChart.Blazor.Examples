@@ -7,6 +7,7 @@ namespace ServerDemo.Pages;
 public partial class UniformHeatmapSeriesDemo : ComponentBase
 {
     private SciChartSurface? _sciChartRef;
+    private UniformHeatmapDataSeries? _dataSeriesRef;
 
     // Sample heatmap data - 10x10 grid with values from 0 to 100
     private double[][] zValues = new double[][]
@@ -38,4 +39,26 @@ public partial class UniformHeatmapSeriesDemo : ComponentBase
 
     [Inject]
     private ILogger<UniformHeatmapSeriesDemo>? Logger { get; set; }
+
+    private async Task UpdateAll()
+    {
+        if (_dataSeriesRef is null) return;
+        var newZValues = new double[10][];
+        for (int y = 0; y < 10; y++)
+        {
+            newZValues[y] = new double[10];
+            for (int x = 0; x < 10; x++)
+            {
+                var v = (Math.Sin(x * 0.6) + Math.Cos(y * 0.6)) * 25 + 50;
+                newZValues[y][x] = Math.Round(v);
+            }
+        }
+        await _dataSeriesRef.SetZValues(newZValues);
+    }
+
+    private async Task UpdateOne()
+    {
+        if (_dataSeriesRef is null) return;
+        await _dataSeriesRef.SetZValue(0, 0, 99);
+    }
 }

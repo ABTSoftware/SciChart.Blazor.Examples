@@ -34,6 +34,10 @@ public partial class AxisDemo : ComponentBase
     private string _xAxisTitle = "X Axis";
     private string _yAxisTitle = "Y Axis";
 
+    // Axis Alignment - Chart 1
+    private EAxisAlignment _xAxisAlignment = EAxisAlignment.Bottom;
+    private EAxisAlignment _yAxisAlignment = EAxisAlignment.Left;
+
     // Range Configuration - Chart 1
     private double _visibleRangeMin = -5;
     private double _visibleRangeMax = 5;
@@ -343,6 +347,30 @@ public partial class AxisDemo : ComponentBase
         if (_sciChartRef != null)
         {
             _sciChartRef.RequestUpdate();
+        }
+    }
+
+    private void OnXAxisAlignmentChanged(ChangeEventArgs e)
+    {
+        if (Enum.TryParse<EAxisAlignment>(e.Value?.ToString(), out var alignment))
+        {
+            _xAxisAlignment = alignment;
+            if (_sciChartRef != null)
+            {
+                _sciChartRef.RequestUpdate();
+            }
+        }
+    }
+
+    private void OnYAxisAlignmentChanged(ChangeEventArgs e)
+    {
+        if (Enum.TryParse<EAxisAlignment>(e.Value?.ToString(), out var alignment))
+        {
+            _yAxisAlignment = alignment;
+            if (_sciChartRef != null)
+            {
+                _sciChartRef.RequestUpdate();
+            }
         }
     }
 
