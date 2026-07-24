@@ -1,5 +1,10 @@
 # SciChart Blazor Change Log
 
+## 5.2.55-beta.24
+
+- Updated to scichart.js 5.2.55 which includes fix for NonUniformHeatmap linear interpolation
+- Fixed bug with project failed to start in Visual Studio with TypeScript support enabled
+
 ## 5.2.45-alpha.23
 
 - Fixed the missing `AxisAlignment` property on `NumericAxis` and exposed additional axis label options (`LabelFormat`, `LabelPrecision`, `CursorLabelFormat`, `CursorLabelPrecision`, `LabelPrefix`, `LabelPostfix`, `Rotation`, `UseNativeText`, `UseSharedCache`, `LineSpacing`, `AlwaysShowFirstLabel`); the Axis demo now demonstrates axis alignment and label formatting (SCJS-2637).
