@@ -90,6 +90,11 @@ public partial class AxisDemo : ComponentBase
     private bool _isVisible = true;
     private bool _flippedCoordinates = false;
 
+    // Dynamic Axes
+    private List<(string Id, bool IsVisible)> _dynamicAxes = new List<(string Id, bool IsVisible)>();
+
+    private int _dynamicAxisCounter;
+
     protected override void OnInitialized()
     {
         Logger.LogInformation("AxisDemo initialized");
@@ -153,6 +158,21 @@ public partial class AxisDemo : ComponentBase
             xData[i] = (i - 50) * 0.1; // Range from -5 to 5
             yData[i] = Math.Sin(xData[i]);
         }
+    }
+
+    private void AddDynamicAxis()
+    {
+        _dynamicAxisCounter++;
+        _dynamicAxes.Add(($"dynamic {_dynamicAxisCounter}", true));
+        _sciChartRef?.RequestUpdate();
+    }
+
+    private void RemoveDynamicAxis()
+    {
+        if (_dynamicAxes.Count == 0) return;
+
+        _dynamicAxes.RemoveAt(_dynamicAxes.Count - 1);
+        _sciChartRef?.RequestUpdate();
     }
 
     private void UpdateVisibleRange()

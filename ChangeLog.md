@@ -1,5 +1,11 @@
 # SciChart Blazor Change Log
 
+## 5.2.69-beta.28
+
+- Updated to scichart.js 5.2.69
+- Axes can now be added to or removed from a chart at runtime without recreating it; the chart update diffs the axes by id, so only the added or removed ones are built or deleted
+- Added "Add Axis" / "Remove Axis" buttons to the Axis demo showing axes created and removed at runtime. 
+
 ## 5.2.62-beta.25
 
 - Updated to scichart.js 5.2.62

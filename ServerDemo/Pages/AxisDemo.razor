@@ -35,6 +35,11 @@
                     UseSharedCache="true"
                     LineSpacing="2"
                     AlwaysShowFirstLabel="true" />
+                @foreach (var da in _dynamicAxes.Where(da => da.IsVisible == true))
+                {
+                    <NumericAxis @key="da.Id" AxisTitle="@da.Id" AutoRange="EAutoRange.Once" Id="@da.Id" />
+                }
+
             </XAxes>
             <YAxes>
                 <NumericAxis
@@ -60,6 +65,17 @@
     </div>
 
     <div style="overflow-y: auto; height: 467px; width: 400px;">
+        <!-- Dynamic Axes -->
+        <div class="mb-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <h6 class="mb-3">Dynamic Axes</h6>
+
+            <div class="mb-2">
+                <label class="form-label" id="dynamicAxesCount">Count: @_dynamicAxes.Count</label>
+            </div>
+
+            <button type="button" class="btn btn-sm btn-primary me-1" id="addDynamicAxis" @onclick="AddDynamicAxis">Add Axis</button>
+            <button type="button" class="btn btn-sm btn-danger" id="removeDynamicAxis" @onclick="RemoveDynamicAxis">Remove Axis</button>
+        </div>
         <!-- Range Configuration -->
         <div class="mb-3 p-3 border rounded" style="background-color: #f8f9fa;">
             <h6 class="mb-3">Range Configuration</h6>
