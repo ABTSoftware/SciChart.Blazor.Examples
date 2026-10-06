@@ -11,6 +11,8 @@ public partial class OhlcSeriesDemo : ComponentBase
 
     private SciChartSurface _sciChartRef;
     private OhlcDataSeries? _ohlcDataSeriesRef;
+    private bool _autoSimplify;
+    private NumberRange _xVisibleRange = new NumberRange { Min = -1, Max = 55 };
 
     private double[] xData;
     private double[] openData;
@@ -50,6 +52,18 @@ public partial class OhlcSeriesDemo : ComponentBase
 
             price = close;
         }
+    }
+
+    // Keeps the zoomed range, otherwise the next update would reset the axis to the initial range
+    private void OnXVisibleRangeChanged((double min, double max) range)
+    {
+        _xVisibleRange = new NumberRange { Min = range.min, Max = range.max };
+    }
+
+    private void ToggleAutoSimplify()
+    {
+        _autoSimplify = !_autoSimplify;
+        _sciChartRef.RequestUpdate();
     }
 
     private async Task AppendData()

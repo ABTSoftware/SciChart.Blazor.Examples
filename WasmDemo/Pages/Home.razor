@@ -7,6 +7,31 @@
 <div>Navigate through the menu on the left to switch different SciChart examples. </div>
 <div>This is SciChart surface with two axes and chart modifiers. Use mouse wheel to zoom and hold left mouse key to pan </div>
 
+<div class="d-flex align-items-center gap-4 my-3">
+    <div class="d-flex align-items-center gap-2">
+        <label for="renderMode">Render Mode:</label>
+        <select id="renderMode" class="form-select form-select-sm" style="width: auto;" value="@_renderMode" @onchange="OnRenderModeChanged">
+            @foreach (var mode in Enum.GetValues<ERenderMode>())
+            {
+                <option value="@mode">@mode</option>
+            }
+        </select>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+        <label for="wasmMode">Wasm Mode:</label>
+        <select id="wasmMode" class="form-select form-select-sm" style="width: auto;" value="@_wasmMode" @onchange="OnWasmModeChanged">
+            @foreach (var mode in Enum.GetValues<EWasmMode>())
+            {
+                <option value="@mode">@mode</option>
+            }
+        </select>
+    </div>
+    <div class="form-check">
+        <input id="licenseDebug" type="checkbox" class="form-check-input" checked="@_licenseDebug" @onchange="OnLicenseDebugChanged" />
+        <label for="licenseDebug" class="form-check-label">License Debug</label>
+    </div>
+</div>
+
 <div id="demo" style="display: flex; gap: 20px; align-items: flex-start;">
     <div style="width: 600px; flex-shrink: 0;">
         <SciChartSurface HeightAspect="2" WidthAspect="3">

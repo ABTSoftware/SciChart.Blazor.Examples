@@ -21,6 +21,7 @@
                 MajorLineStyle="@majorLineStyle"
                 MinorLineStyle="@minorLineStyle"
                 MinorsPerMajor="3"
+                ColorMapMode="@_colorMapMode"
                 SeriesName="Temperature Contours">
                 <ContoursDataLabelProvider
                     IsEnabled="true"
@@ -40,6 +41,13 @@
         </SciChartSurface>
     </div>
     <div style="margin-left: 20px;">
+        <label for="colorMapMode">Color Map Mode:</label>
+        <select id="colorMapMode" class="form-select form-select-sm" style="width: auto;" value="@_colorMapMode" @onchange="OnColorMapModeChanged">
+            @foreach (var mode in Enum.GetValues<EContourColorMapMode>())
+            {
+                <option value="@mode">@mode</option>
+            }
+        </select>
         <div class="mt-3">
             <h5>Description:</h5>
             <ul style="font-size: 0.9em;">
@@ -47,7 +55,7 @@
                 <li>Data labels display temperature values from metadata</li>
                 <li>LabelRowCount controls the number of label rows (set to 5)</li>
                 <li>MetadataSelector formats values as temperature (°C)</li>
-                <li>Color gradient: Blue (cold) → Green (medium) → Red (hot)</li>
+                <li>Color Map Mode switches how contour lines are colored</li>
             </ul>
         </div>
     </div>
