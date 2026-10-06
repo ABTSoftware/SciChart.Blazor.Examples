@@ -9,12 +9,16 @@
     <div id="demo" style="width: 600px;">
         <SciChartSurface @ref="_sciChartRef" HeightAspect="2" WidthAspect="3">
             <XAxes>
-                <NumericAxis VisibleRange="@(new NumberRange { Min = -1, Max = 55 })" />
+                <NumericAxis VisibleRange="@_xVisibleRange" OnVisibleRangeChanged="OnXVisibleRangeChanged" />
             </XAxes>
             <YAxes>
                 <NumericAxis />
             </YAxes>
             <FastOhlcRenderableSeries
+                Id="ohlcSeries"
+                AutoSimplify="@_autoSimplify"
+                SimplifyOpenThresholdPx="20"
+                SimplifyCloseThresholdPx="20"
                 StrokeUp="#4CAF50"
                 StrokeDown="#F44336"
                 StrokeThickness="2"
@@ -33,6 +37,10 @@
         </SciChartSurface>
     </div>
     <div style="margin-left: 20px;">
+        <button id="btn-auto-simplify" type="button" class="btn btn-secondary mt-2" @onclick="ToggleAutoSimplify">
+            Auto Simplify: @(_autoSimplify ? "On" : "Off")
+        </button>
+        <br />
         <button id="btn-append-data" type="button" class="btn btn-secondary mt-2" @onclick="AppendData">
             Append Data
         </button>

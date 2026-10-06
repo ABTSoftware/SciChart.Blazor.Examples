@@ -1,5 +1,19 @@
 # SciChart Blazor Change Log
 
+## 6.0.6-beta.1
+
+- Updated to scichart.js 6.0.6. Examples for version 5 are on the `v5.x` branch
+- WebGPU support. The renderer is chosen by the `IS_WEB_GPU` local storage key (unset = Auto, `"1"` = WebGPU, `"0"` = WebGL); Auto uses WebGPU on Apple Silicon Macs and WebGL elsewhere. Added the `ERenderMode` enum and a Render Mode dropdown (Auto / WebGL / WebGPU) on the Home page of both demos
+- ES modules and tree-shaking: only the chart types the Blazor components can create are registered, so 3D, polar and pie code is left out of the bundle. `sciChartJsWrapper.js` went from 1.76 MB to 1.33 MB (409 KB to 321 KB gzipped)
+- Wasm64 support. The engine is chosen by the `SCICHART_WASM_MODE` local storage key (`Wasm32` by default, `Wasm32NoSimd` or `Wasm64`); wasm64 needs Chrome / Edge 133+ or Firefox 134+. Added the `EWasmMode` enum and a Wasm Mode dropdown on the Home page of both demos
+- The package now ships `scichart.wasm`, `scichart-nosimd.wasm` and `scichart-64.wasm` instead of `scichart2d.wasm`
+- Added a License Debug checkbox on the Home page of both demos, which sets the `LICENSE_DEBUG` local storage key. The same key now also turns the SciChart.Blazor console logging on and off
+- OHLC auto-simplify: `AutoSimplify`, `SimplifyOpenThresholdPx` and `SimplifyCloseThresholdPx` on `FastOhlcRenderableSeries` hide the open / close ticks when bars are too dense. Added an Auto Simplify On / Off button to the OHLC demo
+- Per-series Y axis inside a stacked column collection: `YAxisId` on `StackedColumnRenderableSeries`. Series sharing a `StackedGroupId` must use the same Y axis. The Vertically Stacked Column demo now has a second group on its own Y axis
+- Contour coloring mode: `ColorMapMode` on `UniformContoursRenderableSeries` with the new `EContourColorMapMode` enum (`SingleColor`, the default, `GradientColors` and `AlternateColors`). Added a Color Map Mode dropdown to the Uniform Contours demo
+- Pixel-aligned box annotation: `IsPixelAligned` on `BoxAnnotation` keeps the border stable while dragging or panning
+- Fixed a Blazor Server error when a chart was rebuilt while it was still re-rendering, for example clicking Clear in the Realtime demo
+
 ## 5.2.69-beta.28
 
 - Updated to scichart.js 5.2.69

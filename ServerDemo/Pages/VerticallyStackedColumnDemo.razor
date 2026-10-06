@@ -4,7 +4,7 @@
 
 <h1>Vertically Stacked Column Chart</h1>
 
-<p>This example demonstrates vertically stacked columns where series stack on top of each other.</p>
+<p>This example demonstrates vertically stacked columns where series stack on top of each other. Two stacked groups share one collection, each bound to its own Y axis.</p>
 
 <div style="display: flex">
     <div id="demo" style="width: 600px;">
@@ -13,12 +13,14 @@
                 <NumericAxis Id="xAxis" AxisTitle="Category" VisibleRange="@(new NumberRange { Min = -1, Max = 8 })" />
             </XAxes>
             <YAxes>
-                <NumericAxis Id="yAxis" AxisTitle="Value" />
+                <NumericAxis Id="yAxis" AxisTitle="Group A" AxisAlignment="EAxisAlignment.Left" GrowBy="@(new NumberRange { Min = 0, Max = 0.1 })" />
+                <NumericAxis Id="yAxis2" AxisTitle="Group B" AxisAlignment="EAxisAlignment.Right" GrowBy="@(new NumberRange { Min = 0, Max = 0.1 })" />
             </YAxes>
 
             <StackedColumnCollection IsOneHundredPercent="@_isOneHundredPercent" XAxisId="xAxis" YAxisId="yAxis" DataPointWidth="0.5">
                 <StackedColumnRenderableSeries
                     Id="series1"
+                    StackedGroupId="GroupA"
                     Fill="rgba(70, 130, 180, 0.8)"
                     Stroke="#4682B4"
                     StrokeThickness="1"
@@ -28,6 +30,7 @@
 
                 <StackedColumnRenderableSeries
                     Id="series2"
+                    StackedGroupId="GroupA"
                     Fill="rgba(255, 140, 0, 0.8)"
                     Stroke="#FF8C00"
                     StrokeThickness="1"
@@ -37,11 +40,34 @@
 
                 <StackedColumnRenderableSeries
                     Id="series3"
+                    StackedGroupId="GroupA"
                     Fill="rgba(50, 205, 50, 0.8)"
                     Stroke="#32CD32"
                     StrokeThickness="1"
                     SeriesName="Product C">
                     <XyDataSeries @ref="_xyDataSeriesSeries3Ref" XValues="@_xData" YValues="@_yData3" />
+                </StackedColumnRenderableSeries>
+
+                <StackedColumnRenderableSeries
+                    Id="series4"
+                    StackedGroupId="GroupB"
+                    YAxisId="yAxis2"
+                    Fill="rgba(133, 98, 180, 0.8)"
+                    Stroke="#8562B4"
+                    StrokeThickness="1"
+                    SeriesName="Product D">
+                    <XyDataSeries @ref="_xyDataSeriesSeries4Ref" XValues="@_xData" YValues="@_yData4" />
+                </StackedColumnRenderableSeries>
+
+                <StackedColumnRenderableSeries
+                    Id="series5"
+                    StackedGroupId="GroupB"
+                    YAxisId="yAxis2"
+                    Fill="rgba(220, 68, 63, 0.8)"
+                    Stroke="#DC443F"
+                    StrokeThickness="1"
+                    SeriesName="Product E">
+                    <XyDataSeries @ref="_xyDataSeriesSeries5Ref" XValues="@_xData" YValues="@_yData5" />
                 </StackedColumnRenderableSeries>
             </StackedColumnCollection>
 

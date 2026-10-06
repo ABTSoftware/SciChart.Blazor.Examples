@@ -1,5 +1,7 @@
 # SciChart.Blazor.Examples
 
+> The current version of these examples targets **SciChart.Blazor 6**, based on SciChart.js 6. To find the examples for version 5, use the [v5.x](https://github.com/ABTSoftware/SciChart.Blazor.Examples/tree/v5.x) branch.
+
 See the [Change Log](ChangeLog.md) for the latest updates.
 
 ![SciChart Blazor Wasm Demo image](docs/scichart_blazor_wasm_demo.png)
@@ -71,7 +73,7 @@ For running ServerDemo:
 
 SciChart.Blazor is Blazor component library that wraps [SciChart.js](https://www.scichart.com/) — a high-performance WebGL charting library — enabling its use in Blazor Server and Blazor WebAssembly applications.
 
-Current version of nuget package supports only 2D charts, Polar Charts and Pie Charts are not supported at the moment. The package is based on SciChart.js version `5.2.69`.
+Current version of nuget package supports only 2D charts, Polar Charts and Pie Charts are not supported at the moment. The package is based on SciChart.js version `6.0.6`.
 All charts that are in the library support initial creation and data append. However, only FastLineRenderableSeries has been well tested at the moment.
 
 ## Getting Started

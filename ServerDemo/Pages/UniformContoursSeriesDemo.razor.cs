@@ -7,6 +7,7 @@ namespace ServerDemo.Pages;
 public partial class UniformContoursSeriesDemo : ComponentBase
 {
     private SciChartSurface? _sciChartRef;
+    private EContourColorMapMode _colorMapMode = EContourColorMapMode.SingleColor;
 
     // Sample contour data - 10x10 grid with values from 0 to 100
     private double[][] zValues = new double[][]
@@ -55,6 +56,12 @@ public partial class UniformContoursSeriesDemo : ComponentBase
 
     [Inject]
     private ILogger<UniformContoursSeriesDemo>? Logger { get; set; }
+
+    private void OnColorMapModeChanged(ChangeEventArgs e)
+    {
+        _colorMapMode = Enum.Parse<EContourColorMapMode>(e.Value?.ToString() ?? nameof(EContourColorMapMode.SingleColor));
+        _sciChartRef?.RequestUpdate();
+    }
 
     private static PointMetadata[][] GenerateMetadata()
     {
